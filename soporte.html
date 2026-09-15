@@ -34,13 +34,22 @@
             <p class="inline-block mb-5 px-3 py-1 rounded-full border border-beam-500/40 text-beam-400 text-xs font-semibold tracking-wide uppercase">Área de clientes</p>
             <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Tu portal de soporte</h1>
             <p class="mt-5 text-white/75">
-                Estamos habilitando el portal donde vas a poder abrir tickets y seguir el estado
-                de tu web. Mientras tanto, escribinos por WhatsApp y te respondemos igual de rápido.
+                Acá accedés al área de soporte para abrir tickets y seguir el estado de tu web.
+                Si tu panel ya está creado, iniciá sesión. Si todavía no lo tenés listo,
+                escribinos por WhatsApp y lo activamos.
             </p>
-            <a href="https://wa.me/59894319604?text=%C2%A1Hola!%20Soy%20cliente%20y%20necesito%20soporte." target="_blank" rel="noopener"
-               class="inline-block mt-8 px-8 py-4 rounded-full bg-beam-500 hover:bg-beam-400 text-ink-900 font-semibold transition">
-                Pedir soporte por WhatsApp
-            </a>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <a id="btn-panel" href="#"
+                   class="px-8 py-4 rounded-full bg-beam-500 hover:bg-beam-400 text-ink-900 font-semibold transition">
+                    Iniciar sesión
+                </a>
+                <a href="https://wa.me/59894319604?text=%C2%A1Hola!%20Soy%20cliente%20y%20necesito%20soporte." target="_blank" rel="noopener"
+                   class="px-8 py-4 rounded-full border border-white/25 hover:border-white/60 font-semibold transition">
+                    Contactanos por WhatsApp
+                </a>
+            </div>
+            <p id="aviso-panel" class="mt-4 text-sm text-white/50" hidden>El panel todavía no está disponible.</p>
             <p class="mt-8">
                 <a href="index.html" class="text-white/50 hover:text-white text-sm">← Volver al inicio</a>
             </p>
@@ -53,6 +62,27 @@
         </div>
     </footer>
 
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+        // ------------------------------------------------------------------
+        // UNICO VALOR A CAMBIAR cuando el WordPress del area de clientes este
+        // publicado: la URL de su pantalla de login.
+        //   Ej: 'https://soporte.andamioweb.com/wp-login.php'
+        // Mientras este vacio, el boton "Iniciar sesion" queda desactivado en
+        // lugar de llevar a una pagina que no existe.
+        // ------------------------------------------------------------------
+        const PANEL_URL = '';
+
+        const btn = document.getElementById('btn-panel');
+        if (PANEL_URL) {
+            btn.href = PANEL_URL;
+        } else {
+            btn.removeAttribute('href');
+            btn.setAttribute('aria-disabled', 'true');
+            btn.classList.add('opacity-40', 'cursor-not-allowed');
+            document.getElementById('aviso-panel').hidden = false;
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

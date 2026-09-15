@@ -167,7 +167,9 @@ $faq = [
                 <?php endforeach; ?>
             </div>
 
-            <div class="mt-12 p-7 rounded-3xl bg-paper border border-dashed border-beam-600/50">
+            <p class="mt-8 text-center text-sm text-neutral-500">Precios en pesos uruguayos (UYU).</p>
+
+            <div class="mt-8 p-7 rounded-3xl bg-paper border border-dashed border-beam-600/50">
                 <h3 class="font-bold text-lg">Agregados <span class="text-sm font-medium text-neutral-500">· costo extra, se cotizan según el proyecto</span></h3>
                 <ul class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm text-neutral-700">
                     <?php foreach ($agregados as $agregado) : ?>
