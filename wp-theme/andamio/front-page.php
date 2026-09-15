@@ -27,7 +27,7 @@ $planes = [
         'items' => [
             'Catálogo con buscador y filtros',
             'Carrito, checkout y control de stock',
-            'Métodos de pago',
+            'Métodos de pago, con tarjeta por Mercado Pago',
             'Cupones de descuento y costos de envío',
             'Panel para gestionar productos, stock y pedidos',
             'Boceto en 48 hs',
@@ -49,7 +49,7 @@ $planes = [
 ];
 
 $agregados = [
-    'Secciones o páginas adicionales', 'Cobro con tarjeta (Mercado Pago)', 'Avisos de pedidos por WhatsApp',
+    'Secciones o páginas adicionales', 'Avisos de pedidos por WhatsApp',
     'Carga de productos', 'Redacción de textos y fotos', 'Diseño de logo',
     'Dominio y hosting', 'Correos con tu dominio', 'Mantenimiento mensual',
 ];
