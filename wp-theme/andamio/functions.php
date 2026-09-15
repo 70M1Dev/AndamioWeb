@@ -94,6 +94,18 @@ add_action('login_enqueue_scripts', function () {
     ');
 });
 
+/**
+ * En el subdominio de soporte no queremos la landing duplicada: la raiz lleva
+ * directo al portal de tickets. La guarda de is_page evita el bucle si alguna
+ * vez se configura /soporte como pagina de inicio.
+ */
+add_action('template_redirect', function () {
+    if (ANDAMIO_SOLO_SOPORTE && is_front_page() && !is_page('soporte')) {
+        wp_safe_redirect(home_url('/soporte/'));
+        exit;
+    }
+});
+
 // El logo del login lleva a la landing publica, no a wordpress.org.
 add_filter('login_headerurl', fn() => andamio_sitio());
 add_filter('login_headertext', fn() => 'Andamio Web');
