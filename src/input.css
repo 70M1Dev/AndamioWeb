@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+
+/* Trama de andamio en el fondo del hero */
+.scaffold-bg {
+    background-image:
+        linear-gradient(90deg, rgba(245, 180, 0, .08) 1px, transparent 1px),
+        linear-gradient(rgba(245, 180, 0, .08) 1px, transparent 1px);
+    background-size: 56px 56px;
+}
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-icon { transform: rotate(45deg); }
+
+/* Contenido cargado desde el editor de WordPress (páginas, portal de tickets) */
+@layer components {
+    .andamio-content { @apply text-neutral-800 leading-relaxed; }
+    .andamio-content > * + * { @apply mt-4; }
+    .andamio-content h2 { @apply text-2xl font-bold mt-10; }
+    .andamio-content h3 { @apply text-xl font-semibold mt-8; }
+    .andamio-content a { @apply text-beam-600 underline; }
+    .andamio-content ul { @apply list-disc pl-6; }
+    .andamio-content ol { @apply list-decimal pl-6; }
+}
