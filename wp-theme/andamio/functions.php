@@ -20,6 +20,9 @@ const ANDAMIO_SOLO_SOPORTE = true;
 // Landing publica. Cambiar por el dominio propio cuando se compre.
 const ANDAMIO_SITIO = 'https://70m1dev.github.io/AndamioWeb/';
 
+// Fluent Support no trae traducciones: las ponemos nosotros.
+require_once get_template_directory() . '/inc/fluent-support-es.php';
+
 // Link a WhatsApp con el mensaje ya escrito.
 function andamio_wa($message = '') {
     $url = 'https://wa.me/' . ANDAMIO_WHATSAPP;
