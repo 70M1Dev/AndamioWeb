@@ -6,91 +6,123 @@
  * ningún otro idioma), así que poner el sitio en "Español de Uruguay" no
  * alcanza: el portal del cliente se ve igual en inglés.
  *
- * El portal es una app Vue que traduce con `i18n[texto] || texto`, donde ese
- * array lo arma PHP y lo expone el filtro `fluent_support/customer_portal_vars`.
- * Completando ese array traducimos el portal sin tocar el plugin, sin archivos
- * .mo y sin plugins de traducción, y queda versionado junto al tema.
+ * En Fluent Support 2.x todos los textos del portal salen de
+ * Services/TranslationStrings::getPortalStrings(), y cada uno pasa por __()
+ * con el dominio 'fluent-support'. Alcanza entonces con engancharse al filtro
+ * `gettext`: traducimos sin tocar el plugin, sin archivos .mo, sin plugins de
+ * traducción, y queda versionado junto al tema.
+ *
+ * Si algún texto sigue en inglés, hay que buscar su cadena exacta en
+ * app/Services/TranslationStrings.php del plugin y sumarla acá tal cual: la
+ * clave tiene que coincidir carácter por carácter con el original en inglés.
  */
 
 if (!defined('ABSPATH')) exit;
 
 /**
- * Textos del portal que ve el cliente.
- * Las claves son las cadenas en inglés que pide el JS del plugin: si una clave
- * no está, el portal muestra el inglés (o el nombre crudo de la clave, como
- * pasa de fábrica con reopen_ticket_instruction).
+ * Traducciones del portal del cliente.
+ * Las claves son las cadenas en inglés de Fluent Support 2.4.0.
  */
-function andamio_fs_textos_portal() {
+function andamio_fs_traducciones() {
     return [
-        // Navegación y listado
-        'View Your Tickets'                 => 'Tus tickets',
-        'View All'                          => 'Ver todos',
-        'All'                               => 'Todos',
-        'Open'                              => 'Abierto',
-        'Closed'                            => 'Cerrado',
-        'Date'                              => 'Fecha',
-        'Status'                            => 'Estado',
-        'Next'                              => 'Siguiente',
-        'Prev'                              => 'Anterior',
+        // Listado de tickets
+        'View Your Tickets'    => 'Tus tickets',
+        'All Tickets'          => 'Todos los tickets',
+        'Back to All Tickets'  => 'Volver a todos los tickets',
+        'No tickets found'     => 'Todavía no tenés tickets',
+        'Ticket'               => 'Ticket',
+        'Ticket ID'            => 'N.º de ticket',
+        'Title'                => 'Título',
+        'Date'                 => 'Fecha',
+        'Created at'           => 'Creado el',
+        'Status'               => 'Estado',
+        'Search'               => 'Buscar',
+        'Sort'                 => 'Ordenar',
+        'Sort By'              => 'Ordenar por',
+        'Ascending'            => 'Ascendente',
+        'Descending'           => 'Descendente',
+        'Default'              => 'Por defecto',
+        'Apply'                => 'Aplicar',
+        'Refresh'              => 'Actualizar',
+        'All'                  => 'Todos',
+        'All Products'         => 'Todos los servicios',
+        'Page'                 => 'Página',
+        'page'                 => 'página',
+        'of'                   => 'de',
+
+        // Estados y prioridades
+        'Open'                 => 'Abierto',
+        'Closed'               => 'Cerrado',
+        'Completed'            => 'Completado',
+        'Processing'           => 'Procesando',
+        'Failed'               => 'Falló',
+        'Normal'               => 'Normal',
+        'priority'             => 'prioridad',
 
         // Crear un ticket
-        'Create a New Ticket'               => 'Crear un ticket nuevo',
-        'Create Ticket'                     => 'Crear ticket',
-        'Submit a Support Ticket'           => 'Enviar un pedido de soporte',
-        'Subject'                           => 'Asunto',
-        "What's about this support ticket"  => '¿Sobre qué es tu consulta?',
+        'Submit a Support Ticket'                   => 'Enviar un pedido de soporte',
+        'Create Ticket'                             => 'Crear ticket',
+        'subject'                                   => 'asunto',
+        "What's this support ticket about?"         => '¿Sobre qué es tu consulta?',
         'Please provide details about your problem' => 'Contanos en detalle qué está pasando',
-        'Additional info'                   => 'Información adicional',
-        'Priority'                          => 'Prioridad',
-        'Select Priority'                   => 'Elegí la prioridad',
-        'Related Product/Service'           => 'Servicio relacionado',
-        'Select related Product/Service'    => 'Elegí el servicio relacionado',
-        'Click to upload'                   => 'Hacé clic para adjuntar',
-        'File failed to upload'             => 'No se pudo subir el archivo',
+        'Additional info'                           => 'Información adicional',
+        'Related Product/Service'                   => 'Servicio relacionado',
+        'Select related Product/Service'            => 'Elegí el servicio relacionado',
+        'Add Attachment'                            => 'Adjuntar archivo',
+        'Browse Files'                              => 'Elegir archivos',
+        'Files with a size less than 2MB. Supported Types: images, text, pdf, zip' => 'Archivos de hasta 2 MB. Formatos: imágenes, texto, PDF y ZIP.',
+        'Please verify that you are not a robot.'   => 'Confirmá que no sos un robot.',
+        'reCAPTCHA failed to load.'                 => 'No se pudo cargar el reCAPTCHA.',
 
         // Conversación
-        'Conversation'                      => 'Conversación',
-        'Ticket Details'                    => 'Detalle del ticket',
-        'Reply'                             => 'Responder',
-        'Write a reply'                     => 'Escribí tu respuesta',
-        'Click Here to Write a reply'       => 'Hacé clic acá para responder',
-        'You'                               => 'Vos',
-        'by'                                => 'por',
-        'replied'                           => 'respondió',
-        'started the conversation'          => 'inició la conversación',
+        'Conversation'                => 'Conversación',
+        'Ticket Details'              => 'Detalle del ticket',
+        'Reply'                       => 'Responder',
+        'Reply and Close'             => 'Responder y cerrar',
+        'Write a reply'               => 'Escribí tu respuesta',
+        'Click Here to Write a reply' => 'Hacé clic acá para responder',
+        'You'                         => 'Vos',
+        'by'                          => 'por',
+        'started the conversation'    => 'inició la conversación',
+        'created this ticket on your behalf' => 'creó este ticket por vos',
+        'Thread Starter'              => 'Inició la conversación',
+        'Thread Follower'             => 'Sigue la conversación',
+        'Support Staff'               => 'Equipo de soporte',
+        'Suggested Articles'          => 'Artículos sugeridos',
 
         // Cerrar y reabrir
-        'Close Ticket'                      => 'Cerrar ticket',
-        'Reopen This ticket'                => 'Reabrir este ticket',
-        // El plugin muestra: "{ticket_closed} {fecha}"
-        'ticket_closed'                     => 'Este ticket se cerró el',
-        // De fábrica esta clave no existe y el portal muestra el texto crudo
-        // "reopen_ticket_instruction" al cliente.
-        'reopen_ticket_instruction'         => 'Si el problema sigue, podés reabrir el ticket.',
+        'Close Ticket'          => 'Cerrar ticket',
+        'Reopen This ticket'    => 'Reabrir este ticket',
+        'This ticket is'        => 'Este ticket es',
+        'This ticket was closed on' => 'Este ticket se cerró el',
+        'If you still have related issues. Please reopen this ticket and reply' => 'Si el problema sigue, reabrí el ticket y contanos.',
 
-        // Avisos de privacidad. El plugin los arma como:
-        // "This ticket is {Private|Public}. {mensaje}", por eso van en minúscula.
-        'Private'                           => 'privado',
-        'Public'                            => 'público',
-        'agent_and_officials_can_see'       => 'Solo vos y el equipo de Andamio Web pueden ver esta conversación',
-        'not_to_share_private_info'         => 'No compartas contraseñas ni datos sensibles por acá',
+        // Privacidad. El plugin arma "This ticket is {Private|Public}. {aviso}",
+        // por eso Private y Public van en minúscula.
+        'Private' => 'privado',
+        'Public'  => 'público',
+        'Only you and official support agents can view this conversation' => 'Solo vos y el equipo de Andamio Web pueden ver esta conversación',
+        'Please do not share any private information.' => 'No compartas contraseñas ni datos sensibles.',
 
-        // Errores
+        // Sesión y errores
+        'Log Out' => 'Cerrar sesión',
+        'Retry'   => 'Reintentar',
         'Unknown error. Please reload this page' => 'Hubo un error. Recargá la página, por favor.',
+        'Your account is currently inactive. You cannot create new tickets or reply to existing ones. Please contact the site administrator for assistance' => 'Tu cuenta está inactiva: no podés crear tickets ni responder. Escribinos por WhatsApp y la reactivamos.',
+
+        // Textos que el plugin imprime desde PHP, antes de que arranque el portal
+        'Loading Customer Portal. Please wait...' => 'Cargando tu portal de soporte...',
+        'You don’t have permission to view the tickets' => 'Tu usuario todavía no tiene acceso a los tickets. Escribinos por WhatsApp y lo activamos.',
+        'Customer Portal is only accessible by Customers. Looks like you are a support staff' => 'El portal es solo para clientes. Estás entrando con una cuenta del equipo de soporte.',
+        'Go to Support Admin Page' => 'Ir al panel de soporte',
+        'Supported Types: %s and max file size: %dMB' => 'Formatos aceptados: %s. Peso máximo: %d MB',
+        'Photos'   => 'Fotos',
+        'PDF/Docs' => 'PDF y documentos',
     ];
 }
 
-// Traduce el portal del cliente (la app Vue).
-add_filter('fluent_support/customer_portal_vars', function ($data) {
-    $data['i18n'] = array_merge(
-        isset($data['i18n']) && is_array($data['i18n']) ? $data['i18n'] : [],
-        andamio_fs_textos_portal()
-    );
-    return $data;
-});
-
 /**
- * Textos que el plugin imprime desde PHP, antes de que arranque la app.
+ * Traduce cualquier texto del plugin que pase por __() o _e().
  */
 add_filter('gettext', function ($traducido, $texto, $dominio) {
     if ($dominio !== 'fluent-support') {
@@ -99,53 +131,8 @@ add_filter('gettext', function ($traducido, $texto, $dominio) {
 
     static $textos = null;
     if ($textos === null) {
-        $textos = [
-            'Loading Customer Portal. Please wait...' => 'Cargando tu portal de soporte...',
-            'You don’t have permission to view the tickets' => 'Tu usuario todavía no tiene acceso a los tickets. Escribinos por WhatsApp y lo activamos.',
-            'Customer Portal is only accessible by Customers. Looks like you are a support staff' => 'El portal es solo para clientes. Estás entrando con una cuenta del equipo de soporte.',
-            'Go to Support Admin Page' => 'Ir al panel de soporte',
-
-            // Aviso de adjuntos: el plugin lo arma con sprintf, así que los
-            // marcadores %s (formatos) y %d (megas) van en el mismo orden.
-            'Supported Types: %s and max file size: %dMB' => 'Formatos aceptados: %s. Peso máximo: %d MB',
-            'Photos'   => 'Fotos',
-            'PDF/Docs' => 'PDF y documentos',
-        ];
+        $textos = andamio_fs_traducciones();
     }
 
-    return $textos[$texto] ?? $traducido;
+    return isset($textos[$texto]) ? $textos[$texto] : $traducido;
 }, 10, 3);
-
-/**
- * "This ticket is" es el único texto que el plugin deja fijo en su JavaScript,
- * sin pasar por el traductor, así que se arregla en el navegador. El observer
- * es necesario porque Vue dibuja la conversación después de cargar la página.
- */
-add_action('wp_footer', function () {
-    if (!is_page('soporte')) {
-        return;
-    }
-    ?>
-    <script>
-    (function () {
-        var traducir = function () {
-            var app = document.getElementById('fluent_support_client_app');
-            if (!app) return;
-            var nodos = document.createTreeWalker(app, NodeFilter.SHOW_TEXT);
-            var nodo;
-            while ((nodo = nodos.nextNode())) {
-                if (nodo.nodeValue.indexOf('This ticket is') !== -1) {
-                    nodo.nodeValue = nodo.nodeValue.replace('This ticket is', 'Este ticket es');
-                }
-            }
-        };
-        document.addEventListener('DOMContentLoaded', function () {
-            var app = document.getElementById('fluent_support_client_app');
-            if (!app) return;
-            traducir();
-            new MutationObserver(traducir).observe(app, { childList: true, subtree: true });
-        });
-    })();
-    </script>
-    <?php
-}, 99);
