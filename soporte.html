@@ -64,13 +64,14 @@
 
     <script>
         // ------------------------------------------------------------------
-        // UNICO VALOR A CAMBIAR cuando el WordPress del area de clientes este
-        // publicado: la URL de su pantalla de login.
-        //   Ej: 'https://soporte.andamioweb.com/wp-login.php'
-        // Mientras este vacio, el boton "Iniciar sesion" queda desactivado en
-        // lugar de llevar a una pagina que no existe.
+        // Portal de clientes: el WordPress con Fluent Support, que vive en el
+        // dominio temporal de Hostinger y hace de backend. Apunta a /soporte/
+        // y no a wp-login.php porque esa pagina ya trae el formulario de login
+        // con el diseno de Andamio.
+        // Si se vacia, el boton "Iniciar sesion" queda desactivado en lugar de
+        // llevar a una pagina que no existe.
         // ------------------------------------------------------------------
-        const PANEL_URL = '';
+        const PANEL_URL = 'https://blueviolet-stinkbug-914444.hostingersite.com/soporte/';
 
         const btn = document.getElementById('btn-panel');
         if (PANEL_URL) {
