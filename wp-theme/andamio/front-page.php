@@ -146,7 +146,7 @@ $faq = [
                     $d = $plan['destacado'];
                     $link = andamio_wa('¡Hola! Me interesa el plan ' . $plan['nombre'] . ' de Andamio Web.');
                 ?>
-                    <article class="relative flex flex-col p-7 rounded-3xl <?php echo $d ? 'bg-steel-800 text-white shadow-xl md:-translate-y-3' : 'border border-neutral-200 bg-paper'; ?>">
+                    <article class="relative flex flex-col p-7 rounded-3xl <?php echo $d ? 'bg-ink-900 text-white shadow-xl md:-translate-y-3' : 'border border-neutral-200 bg-paper'; ?>">
                         <?php if ($d) : ?>
                             <span class="absolute -top-3 left-7 px-3 py-1 rounded-full bg-beam-500 text-ink-900 text-xs font-bold">Más elegido</span>
                         <?php endif; ?>
