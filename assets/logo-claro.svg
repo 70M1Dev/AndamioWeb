@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" role="img" aria-label="Andamio Web">
+  <rect x="0" y="0" width="56" height="56" rx="14" fill="#F5B400"/>
+  <path d="M15.4 42V14M40.6 42V14M15.4 22.4h25.2M15.4 33.6h25.2M15.4 22.4l25.2 11.2" stroke="#101826" stroke-width="4.2" stroke-linecap="round" fill="none"/>
+  <text x="70" y="30" font-family="Outfit, system-ui, sans-serif" font-weight="800" font-size="28" fill="#FFFFFF">ANDAMIO</text>
+  <text x="71" y="48" font-family="Outfit, system-ui, sans-serif" font-weight="500" font-size="12" letter-spacing="6" fill="#9AA3B2">WEB · UY</text>
+</svg>

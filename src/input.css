@@ -16,6 +16,22 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 details[open] .faq-icon { transform: rotate(45deg); }
 
+/* Formulario de login del área de clientes (wp_login_form) */
+@layer components {
+    .andamio-login p { @apply mb-4; }
+    .andamio-login label { @apply block text-sm font-semibold text-ink-800 mb-1.5; }
+    .andamio-login input[type="text"],
+    .andamio-login input[type="password"] {
+        @apply w-full rounded-xl border border-neutral-300 px-4 py-2.5 outline-none;
+        @apply focus:border-beam-500 focus:ring-2 focus:ring-beam-500/30;
+    }
+    .andamio-login .login-remember label { @apply flex items-center gap-2 font-normal text-neutral-600; }
+    .andamio-login .login-remember input { @apply w-auto; }
+    .andamio-login .login-submit input[type="submit"] {
+        @apply w-full cursor-pointer rounded-full bg-beam-500 hover:bg-beam-400 px-6 py-3 font-semibold text-ink-900 transition;
+    }
+}
+
 /* Contenido cargado desde el editor de WordPress (páginas, portal de tickets) */
 @layer components {
     .andamio-content { @apply text-neutral-800 leading-relaxed; }
