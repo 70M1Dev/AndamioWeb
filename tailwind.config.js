@@ -9,6 +9,8 @@ module.exports = {
             colors: {
                 ink: { 900: '#101826', 800: '#1B2536', 700: '#2A3548' },
                 beam: { 400: '#FFC53D', 500: '#F5B400', 600: '#D99A00' },
+                // Azul de marca: resalta el plan destacado sin pelearse con el amarillo.
+                steel: { 900: '#15316B', 800: '#1B3E88', 700: '#2450A8' },
                 paper: '#FAF8F3'
             }
         }

@@ -9,42 +9,41 @@ $planes = [
     [
         'nombre' => 'Landing',
         'texto' => 'Para presentar un producto, servicio o emprendimiento.',
-        'precio' => '$ 6.900',
+        'precio' => '$ 4.690',
         'destacado' => false,
         'items' => [
             'Una página con todas tus secciones',
             'Diseño adaptado a celular',
             'Botón de WhatsApp y formulario de contacto',
-            'Posicionamiento básico en Google',
-            'Entrega en 7 a 10 días hábiles',
-        ],
-    ],
-    [
-        'nombre' => 'Web institucional',
-        'texto' => 'Para empresas y profesionales que necesitan presencia completa.',
-        'precio' => '$ 14.900',
-        'destacado' => true,
-        'items' => [
-            'Hasta 5 secciones (inicio, nosotros, servicios, contacto…)',
-            'Novedades o blog que podés actualizar vos',
-            'Formularios, mapa y WhatsApp',
-            'Posicionamiento básico en Google',
-            'Capacitación para editar tu web',
-            'Entrega en 2 a 3 semanas',
+            'Mapa de ubicación',
+            'Boceto en 24 hs',
         ],
     ],
     [
         'nombre' => 'Tienda online',
         'texto' => 'Para vender tus productos las 24 horas.',
-        'precio' => '$ 24.900',
-        'destacado' => false,
+        'precio' => '$ 9.490',
+        'destacado' => true,
         'items' => [
             'Catálogo con buscador y filtros',
             'Carrito, checkout y control de stock',
-            'Pagos por transferencia o coordinados por WhatsApp',
+            'Métodos de pago',
             'Cupones de descuento y costos de envío',
-            'Panel para gestionar productos y pedidos',
-            'Entrega en 3 a 5 semanas',
+            'Panel para gestionar productos, stock y pedidos',
+            'Boceto en 48 hs',
+        ],
+    ],
+    [
+        'nombre' => 'Web institucional',
+        'texto' => 'Para empresas y profesionales que necesitan presencia completa.',
+        'precio' => '$ 6.990',
+        'destacado' => false,
+        'items' => [
+            'Hasta 5 secciones (inicio, nosotros, servicios, contacto…)',
+            'Novedades o blog que podés actualizar vos',
+            'Formularios, mapa y WhatsApp',
+            'Planes de servicios personalizables',
+            'Boceto en 48 hs',
         ],
     ],
 ];
@@ -147,7 +146,7 @@ $faq = [
                     $d = $plan['destacado'];
                     $link = andamio_wa('¡Hola! Me interesa el plan ' . $plan['nombre'] . ' de Andamio Web.');
                 ?>
-                    <article class="relative flex flex-col p-7 rounded-3xl <?php echo $d ? 'bg-ink-900 text-white shadow-xl md:-translate-y-3' : 'border border-neutral-200 bg-paper'; ?>">
+                    <article class="relative flex flex-col p-7 rounded-3xl <?php echo $d ? 'bg-steel-800 text-white shadow-xl md:-translate-y-3' : 'border border-neutral-200 bg-paper'; ?>">
                         <?php if ($d) : ?>
                             <span class="absolute -top-3 left-7 px-3 py-1 rounded-full bg-beam-500 text-ink-900 text-xs font-bold">Más elegido</span>
                         <?php endif; ?>
