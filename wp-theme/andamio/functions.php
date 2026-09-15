@@ -20,6 +20,30 @@ const ANDAMIO_SOLO_SOPORTE = true;
 // Landing publica. Cambiar por el dominio propio cuando se compre.
 const ANDAMIO_SITIO = 'https://70m1dev.github.io/AndamioWeb/';
 
+/**
+ * Este WordPress no manda ningun correo.
+ *
+ * La casilla de soporte se cerro, y el remitente del dominio temporal caia en
+ * spam igual. Los avisos de tickets van a ir por WhatsApp cuando tengamos la
+ * ticketera propia; mientras tanto, es preferible no enviar nada a mandar
+ * correos que rebotan desde una cuenta que ya no existe.
+ *
+ * OJO: esto tambien apaga el correo de "restablecer contrasena". Las claves de
+ * los clientes se cambian a mano desde Usuarios, y el acceso al panel siempre
+ * queda disponible por el auto-login de hPanel.
+ *
+ * Poner en false para volver a habilitar los envios.
+ */
+const ANDAMIO_SIN_CORREOS = true;
+
+add_filter('pre_wp_mail', function ($corto) {
+    if (!ANDAMIO_SIN_CORREOS) {
+        return $corto;
+    }
+    // true = "ya se envio": corta el envio sin que WordPress lo trate como error.
+    return true;
+}, 1);
+
 // Fluent Support no trae traducciones: las ponemos nosotros.
 require_once get_template_directory() . '/inc/fluent-support-es.php';
 

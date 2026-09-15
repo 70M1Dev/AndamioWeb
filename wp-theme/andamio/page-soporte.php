@@ -74,9 +74,11 @@ $nombre = $usuario->first_name ?: $usuario->display_name;
                         'remember' => true,
                     ]);
                     ?>
-                    <p class="mt-4 text-sm">
-                        <a href="<?php echo esc_url(wp_lostpassword_url(home_url('/soporte/'))); ?>"
-                           class="text-neutral-500 hover:text-ink-900 underline">Olvidé mi contraseña</a>
+                    <?php // Sin correos salientes, "restablecer contraseña" no llegaría a ningún lado. ?>
+                    <p class="mt-4 text-sm text-neutral-500">
+                        ¿Olvidaste tu contraseña?
+                        <a href="<?php echo esc_url(andamio_wa('¡Hola! Olvidé la contraseña de mi panel de soporte.')); ?>"
+                           target="_blank" rel="noopener" class="text-beam-600 font-semibold underline">Escribinos y te la reseteamos</a>.
                     </p>
                 </div>
 
