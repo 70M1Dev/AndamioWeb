@@ -1,6 +1,6 @@
-// Textos y precios del sitio. Para cambiar un precio o una pregunta, se toca acá.
+// Textos del sitio. Para cambiar un plan o una pregunta, se toca acá.
 
-const WHATSAPP = '59894319604';
+const WHATSAPP = '59894331117';
 export const wa = (texto?: string) =>
   `https://wa.me/${WHATSAPP}` + (texto ? `?text=${encodeURIComponent(texto)}` : '');
 
@@ -34,7 +34,6 @@ export const CINTA = [
 export type Plan = {
   nombre: string;
   bajada: string;
-  precio: number;
   items: string[];
   destacado?: boolean;
 };
@@ -43,7 +42,6 @@ export const PLANES: Plan[] = [
   {
     nombre: 'Landing',
     bajada: 'Para presentar un producto, servicio o emprendimiento.',
-    precio: 4690,
     items: [
       'Una página con todas tus secciones',
       'Diseño adaptado a celular',
@@ -55,7 +53,6 @@ export const PLANES: Plan[] = [
   {
     nombre: 'Tienda online',
     bajada: 'Para vender tus productos las 24 horas.',
-    precio: 9490,
     destacado: true,
     items: [
       'Catálogo con buscador y filtros',
@@ -69,7 +66,6 @@ export const PLANES: Plan[] = [
   {
     nombre: 'Web institucional',
     bajada: 'Para empresas y profesionales que necesitan presencia completa.',
-    precio: 6990,
     items: [
       'Hasta 5 secciones (inicio, nosotros, servicios, contacto…)',
       'Novedades o blog que podés actualizar vos',
@@ -78,6 +74,14 @@ export const PLANES: Plan[] = [
       'Boceto en 48 hs',
     ],
   },
+];
+
+// Lo que mueve el presupuesto de cada plan. Se muestra debajo de las tarjetas.
+export const FACTORES = [
+  { titulo: 'Diseño', texto: 'Cuánto trabajo de diseño lleva: desde adaptar una estructura probada hasta una identidad visual pensada de cero.' },
+  { titulo: 'Tecnología', texto: 'HTML estático, liviano y rápido, o React para sitios con más interacción y contenido que cambia.' },
+  { titulo: 'Visuales', texto: 'Animaciones, efectos al hacer scroll, escenas 3D o ilustraciones: cuánto querés que se mueva y sorprenda.' },
+  { titulo: 'Contenido', texto: 'Cantidad de secciones y productos, y si los textos y las fotos los traés vos o los armamos nosotros.' },
 ];
 
 export const AGREGADOS = [
@@ -108,7 +112,7 @@ export const PROCESO = [
 
 export const FAQ = [
   {
-    p: '¿El precio incluye dominio y hosting?',
+    p: '¿El presupuesto incluye dominio y hosting?',
     r: 'No, se cotizan aparte. Si ya tenés, usamos los tuyos; si no, te ayudamos a contratarlos a tu nombre para que siempre sean tuyos.',
   },
   {

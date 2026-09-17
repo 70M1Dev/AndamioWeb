@@ -1,10 +1,9 @@
 'use client';
 
 import { motion } from 'motion/react';
-import Contador from '../efectos/Contador';
 import Inclinable from '../efectos/Inclinable';
 import Reveal from '../efectos/Reveal';
-import { AGREGADOS, PLANES, wa, type Plan } from '@/lib/datos';
+import { AGREGADOS, FACTORES, PLANES, wa, type Plan } from '@/lib/datos';
 
 function Tarjeta({ plan }: { plan: Plan }) {
   const d = plan.destacado;
@@ -17,10 +16,10 @@ function Tarjeta({ plan }: { plan: Plan }) {
       <h3 className="text-2xl font-bold">{plan.nombre}</h3>
       <p className={`mt-1 text-sm ${d ? 'text-white/65' : 'text-neutral-600'}`}>{plan.bajada}</p>
       <p className="mt-7">
-        <span className={`text-sm ${d ? 'text-white/55' : 'text-neutral-500'}`}>Desde</span>
+        <span className={`text-4xl font-extrabold tracking-tight ${d ? 'text-beam-500' : ''}`}>A medida</span>
         <br />
-        <span className={`text-5xl font-extrabold tracking-tight ${d ? 'text-beam-500' : ''}`}>
-          <Contador valor={plan.precio} />
+        <span className={`text-sm ${d ? 'text-white/55' : 'text-neutral-500'}`}>
+          Presupuesto según diseño, tecnología y visuales
         </span>
       </p>
       <ul className="mt-7 flex-1 space-y-2.5 text-sm">
@@ -39,7 +38,7 @@ function Tarjeta({ plan }: { plan: Plan }) {
         ))}
       </ul>
       <a
-        href={wa(`¡Hola! Me interesa el plan ${plan.nombre} de Andamio Web.`)}
+        href={wa(`¡Hola! Me interesa el plan ${plan.nombre} de Andamio Web. ¿Me pasan un presupuesto?`)}
         target="_blank"
         rel="noopener"
         className={`group/btn relative mt-9 block overflow-hidden rounded-full px-6 py-3.5 text-center font-semibold transition ${
@@ -47,7 +46,7 @@ function Tarjeta({ plan }: { plan: Plan }) {
         }`}
       >
         <span className="relative z-10 inline-flex items-center gap-2">
-          Quiero este plan
+          Pedir presupuesto
           <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
         </span>
       </a>
@@ -83,7 +82,7 @@ export default function Planes() {
         <Reveal className="mx-auto mb-16 max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-beam-600">Planes</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight md:text-6xl">Elegí tu base.</h2>
-          <p className="mt-4 text-lg text-neutral-600">La ajustamos a lo que necesitás. Los agregados se cotizan aparte.</p>
+          <p className="mt-4 text-lg text-neutral-600">La ajustamos a lo que necesitás y te pasamos un presupuesto a medida.</p>
         </Reveal>
 
         <div className="grid items-stretch gap-7 md:grid-cols-3">
@@ -94,7 +93,21 @@ export default function Planes() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-neutral-500">Precios en pesos uruguayos (UYU).</p>
+        <Reveal className="mt-16">
+          <h3 className="text-center text-2xl font-bold">¿De qué depende el presupuesto?</h3>
+          <p className="mx-auto mt-2 max-w-xl text-center text-neutral-600">
+            Cada web es distinta. Escribinos y lo estimamos juntos según estos puntos.
+          </p>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {FACTORES.map((f, i) => (
+              <div key={f.titulo} className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <span className="text-sm font-bold text-beam-600">0{i + 1}</span>
+                <h4 className="mt-1 text-lg font-bold">{f.titulo}</h4>
+                <p className="mt-2 text-sm text-neutral-600">{f.texto}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
         <Reveal className="mt-10 rounded-[1.75rem] border border-dashed border-beam-600/50 bg-white/60 p-8 backdrop-blur">
           <h3 className="text-lg font-bold">

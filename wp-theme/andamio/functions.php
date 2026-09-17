@@ -6,7 +6,7 @@
 if (!defined('ABSPATH')) exit;
 
 // WhatsApp de Andamio Web: solo digitos, con codigo de pais.
-const ANDAMIO_WHATSAPP = '59894319604';
+const ANDAMIO_WHATSAPP = '59894331117';
 
 /**
  * Este WordPress es SOLO el area de clientes: vive en un subdominio y la
