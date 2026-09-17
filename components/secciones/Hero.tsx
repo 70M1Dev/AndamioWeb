@@ -45,16 +45,16 @@ export default function Hero() {
           WebkitMaskImage: 'radial-gradient(260px circle at var(--x) var(--y), black, transparent)',
         }}
       />
-      {/* Auras de color */}
+      {/* Auras de color (solo escritorio: en celular son caras de componer) */}
       <motion.div
         aria-hidden="true"
-        className="absolute -left-40 top-10 -z-20 h-[36rem] w-[36rem] rounded-full bg-beam-500/15 blur-[120px]"
+        className="absolute -left-40 top-10 -z-20 hidden h-[36rem] w-[36rem] rounded-full bg-beam-500/15 blur-[120px] md:block"
         animate={{ x: [0, 80, 0], y: [0, 40, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         aria-hidden="true"
-        className="absolute -bottom-40 right-0 -z-20 h-[30rem] w-[30rem] rounded-full bg-sky-500/10 blur-[120px]"
+        className="absolute -bottom-40 right-0 -z-20 hidden h-[30rem] w-[30rem] rounded-full bg-sky-500/10 blur-[120px] md:block"
         animate={{ x: [0, -60, 0], y: [0, -30, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
       />

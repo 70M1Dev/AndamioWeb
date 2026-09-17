@@ -1,9 +1,9 @@
 'use client';
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { ContactShadows, Environment, Float, Lightformer, RoundedBox, Sparkles } from '@react-three/drei';
+import { ContactShadows, Environment, Float, Lightformer, PerformanceMonitor, Preload, RoundedBox, Sparkles } from '@react-three/drei';
 import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 // ---------------------------------------------------------------------------
@@ -70,55 +70,72 @@ const easeBack = (t: number) => {
   return 1 + (c + 1) * x * x * x + c * x * x;
 };
 
-// Cilindro de altura 1 con la base en el origen: escalar Y lo "estira".
-const geoCaño = new THREE.CylinderGeometry(1, 1, 1, 14).translate(0, 0.5, 0);
-const geoNudo = new THREE.SphereGeometry(1, 16, 12);
-const geoTabla = new THREE.BoxGeometry(1, 1, 1);
 const Y = new THREE.Vector3(0, 1, 0);
+const tmp = new THREE.Object3D();
 
-type Mats = Record<Tipo, THREE.Material>;
+type Reloj = { current: number };
 
-function PiezaMesh({ p, mats, inicio }: { p: Pieza; mats: Mats; inicio: number }) {
-  const ref = useRef<THREE.Mesh>(null);
-  const largo = p.a.distanceTo(p.b);
-  const quat = useMemo(() => new THREE.Quaternion().setFromUnitVectors(Y, p.b.clone().sub(p.a).normalize()), [p]);
+// Reloj de la animación: arranca después de la intro y de unos cuadros de
+// calentamiento (compilación de shaders), y nunca avanza más de 1/30 s por
+// cuadro. Si el celular se traba, el armado se frena en vez de saltar.
+function Tiempo({ reloj, inicio }: { reloj: Reloj; inicio: number }) {
+  const cuadros = useRef(0);
+  useFrame(({ clock }, dt) => {
+    if (++cuadros.current < 4 || clock.elapsedTime < inicio) return;
+    reloj.current += Math.min(dt, 1 / 30);
+  });
+  return null;
+}
 
-  useFrame(({ clock }) => {
+// Todas las piezas de un tipo en un solo InstancedMesh: una llamada de dibujo
+// en vez de una por pieza. Deja de actualizar cuando terminó de armarse.
+function Piezas({ piezas, tipo, geo, mat, reloj, sombras }: {
+  piezas: Pieza[]; tipo: Tipo; geo: THREE.BufferGeometry; mat: THREE.Material; reloj: Reloj; sombras: boolean;
+}) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const terminado = useRef(false);
+  const lista = useMemo(() => piezas.filter(p => p.tipo === tipo).map(p => ({
+    ...p,
+    largo: p.a.distanceTo(p.b),
+    quat: new THREE.Quaternion().setFromUnitVectors(Y, p.b.clone().sub(p.a).normalize()),
+  })), [piezas, tipo]);
+
+  useFrame(() => {
     const m = ref.current;
-    if (!m) return;
-    const t = (clock.elapsedTime - inicio - p.delay) / 0.7;
-    if (p.tipo === 'caño' || p.tipo === 'riostra') {
-      const r = p.tipo === 'caño' ? 0.055 : 0.035;
-      m.scale.set(r, Math.max(largo * ease(t), 0.0001), r);
-    } else if (p.tipo === 'nudo') {
-      m.scale.setScalar(Math.max(0.095 * easeBack(t), 0.0001));
-    } else {
-      const k = ease(t);
-      m.scale.set(Math.max(largo * 0.96 * k, 0.0001), 0.06, FONDO * 1.7);
-      m.position.set((p.a.x + p.b.x) / 2, p.a.y + 0.04 + (1 - k) * 1.5, 0);
-    }
+    if (!m || terminado.current) return;
+    let todas = true;
+    lista.forEach((p, i) => {
+      const t = (reloj.current - p.delay) / 0.7;
+      if (t < 1) todas = false;
+      tmp.quaternion.identity();
+      if (tipo === 'caño' || tipo === 'riostra') {
+        const r = tipo === 'caño' ? 0.055 : 0.035;
+        tmp.position.copy(p.a);
+        tmp.quaternion.copy(p.quat);
+        tmp.scale.set(r, Math.max(p.largo * ease(t), 0.0001), r);
+      } else if (tipo === 'nudo') {
+        tmp.position.copy(p.a);
+        tmp.scale.setScalar(Math.max(0.095 * easeBack(t), 0.0001));
+      } else {
+        const k = ease(t);
+        tmp.position.set((p.a.x + p.b.x) / 2, p.a.y + 0.04 + (1 - k) * 1.5, 0);
+        tmp.scale.set(Math.max(p.largo * 0.96 * k, 0.0001), 0.06, FONDO * 1.7);
+      }
+      tmp.updateMatrix();
+      m.setMatrixAt(i, tmp.matrix);
+    });
+    m.instanceMatrix.needsUpdate = true;
+    terminado.current = todas;
   });
 
-  if (p.tipo === 'tabla')
-    return <mesh ref={ref} geometry={geoTabla} material={mats.tabla} castShadow scale={0.0001} />;
-  return (
-    <mesh
-      ref={ref}
-      geometry={p.tipo === 'nudo' ? geoNudo : geoCaño}
-      material={mats[p.tipo]}
-      position={p.a}
-      quaternion={p.tipo === 'nudo' ? undefined : quat}
-      scale={0.0001}
-      castShadow
-    />
-  );
+  return <instancedMesh ref={ref} args={[geo, mat, lista.length]} castShadow={sombras} frustumCulled={false} />;
 }
 
 // La web que se arma adentro del andamio
-function Pagina({ inicio }: { inicio: number }) {
+function Pagina({ reloj }: { reloj: Reloj }) {
   const grupo = useRef<THREE.Group>(null);
   const barras = useRef<(THREE.Mesh | null)[]>([]);
-  const desde = inicio + 1.6;
+  const terminado = useRef(false);
 
   // [x, y, ancho, alto, color, delay]
   const bloques: [number, number, number, number, string, number][] = [
@@ -131,8 +148,10 @@ function Pagina({ inicio }: { inicio: number }) {
     [-1.02, -0.74, 0.8, 0.2, '#101826', 0.5],
   ];
 
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime - desde;
+  useFrame(() => {
+    if (terminado.current) return;
+    const t = reloj.current - 1.6;
+    terminado.current = t > 2;
     if (grupo.current) grupo.current.scale.setScalar(Math.max(easeBack(t / 0.8), 0.0001));
     barras.current.forEach((b, i) => {
       if (!b) return;
@@ -168,14 +187,22 @@ function Pagina({ inicio }: { inicio: number }) {
   );
 }
 
-function Andamio({ inicio }: { inicio: number }) {
+function Andamio({ inicio, movil }: { inicio: number; movil: boolean }) {
   const piezas = useMemo(armarPiezas, []);
+  const reloj = useRef(0);
   const grupo = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
   const angosto = viewport.aspect < 1;
 
-  const mats = useMemo<Mats>(() => ({
+  // En celular, caños y nudos con menos caras: a ese tamaño no se nota.
+  const geos = useMemo(() => ({
+    caño: new THREE.CylinderGeometry(1, 1, 1, movil ? 8 : 14).translate(0, 0.5, 0),
+    nudo: new THREE.SphereGeometry(1, movil ? 10 : 16, movil ? 8 : 12),
+    tabla: new THREE.BoxGeometry(1, 1, 1),
+  }), [movil]);
+
+  const mats = useMemo<Record<Tipo, THREE.Material>>(() => ({
     caño: new THREE.MeshStandardMaterial({ color: '#C9D1DC', metalness: 0.95, roughness: 0.28 }),
     riostra: new THREE.MeshStandardMaterial({ color: '#F5B400', metalness: 0.4, roughness: 0.35, emissive: '#F5B400', emissiveIntensity: 0.9, toneMapped: false }),
     tabla: new THREE.MeshStandardMaterial({ color: '#2A3548', metalness: 0.2, roughness: 0.6 }),
@@ -195,7 +222,7 @@ function Andamio({ inicio }: { inicio: number }) {
     const g = grupo.current;
     if (!g) return;
     const scroll = Math.min(scrollY / innerHeight, 1.5);
-    const entrada = ease((clock.elapsedTime - inicio) / 2.5);
+    const entrada = ease(reloj.current / 2.5);
     const objetivoY = -0.55 + (1 - entrada) * -1.2 + mouse.current.x * 0.35 + scroll * 1.2;
     const objetivoX = mouse.current.y * 0.08 + scroll * 0.25;
     g.rotation.y = THREE.MathUtils.damp(g.rotation.y, objetivoY + Math.sin(clock.elapsedTime * 0.25) * 0.08, 3, dt);
@@ -206,33 +233,47 @@ function Andamio({ inicio }: { inicio: number }) {
   return (
     <group position={[angosto ? 0 : 2.6, 0, angosto ? -3 : 0]}>
       <group ref={grupo}>
-        {piezas.map((p, i) => <PiezaMesh key={i} p={p} mats={mats} inicio={inicio} />)}
-        <Pagina inicio={inicio} />
+        {/* Tiempo va primero para que su useFrame corra antes que el de las piezas */}
+        <Tiempo reloj={reloj} inicio={inicio} />
+        <Piezas piezas={piezas} tipo="caño" geo={geos.caño} mat={mats.caño} reloj={reloj} sombras={!movil} />
+        <Piezas piezas={piezas} tipo="riostra" geo={geos.caño} mat={mats.riostra} reloj={reloj} sombras={!movil} />
+        <Piezas piezas={piezas} tipo="nudo" geo={geos.nudo} mat={mats.nudo} reloj={reloj} sombras={!movil} />
+        <Piezas piezas={piezas} tipo="tabla" geo={geos.tabla} mat={mats.tabla} reloj={reloj} sombras={!movil} />
+        <Pagina reloj={reloj} />
         <pointLight position={[0, ALTO * 1.5, 1.4]} intensity={2.5} distance={4} color="#FFC53D" />
       </group>
     </group>
   );
 }
 
+const esMovil = () => matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+
 export default function EscenaAndamio({ inicio = 0 }: { inicio?: number }) {
+  // En celular se apagan el bloom y las sombras (lo más caro por cuadro) y se
+  // limita la densidad de píxeles; si aun así no da abasto, baja a 1.
+  const [movil] = useState(esMovil);
+  const [dpr, setDpr] = useState(movil ? 1.5 : 2);
+
   return (
     <Canvas
-      shadows
-      dpr={[1, 2]}
+      shadows={!movil}
+      dpr={[1, dpr]}
       camera={{ position: [0, 0.6, 9.5], fov: 38 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
+      {movil && <PerformanceMonitor onDecline={() => setDpr(1)} />}
+      <Preload all />
       <fog attach="fog" args={['#0A0F18', 9, 20]} />
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[5, 8, 5]} intensity={2.2} castShadow shadow-mapSize={[1024, 1024]} />
+      <ambientLight intensity={movil ? 0.4 : 0.25} />
+      <directionalLight position={[5, 8, 5]} intensity={2.2} castShadow={!movil} shadow-mapSize={[1024, 1024]} />
       <spotLight position={[-6, 6, 4]} angle={0.5} penumbra={1} intensity={60} color="#F5B400" />
 
       <Float speed={1.2} rotationIntensity={0.08} floatIntensity={0.35}>
-        <Andamio inicio={inicio} />
+        <Andamio inicio={inicio} movil={movil} />
       </Float>
 
-      <Sparkles count={70} scale={[14, 8, 6]} size={2.2} speed={0.35} color="#FFC53D" opacity={0.7} />
-      <ContactShadows position={[2.6, -2.35, 0]} opacity={0.55} scale={14} blur={2.6} far={6} color="#000" />
+      <Sparkles count={movil ? 25 : 70} scale={[14, 8, 6]} size={2.2} speed={0.35} color="#FFC53D" opacity={0.7} />
+      {!movil && <ContactShadows position={[2.6, -2.35, 0]} opacity={0.55} scale={14} blur={2.6} far={6} color="#000" />}
 
       <Environment resolution={256}>
         <Lightformer form="rect" intensity={3} position={[0, 5, -6]} scale={[12, 4, 1]} />
@@ -240,10 +281,12 @@ export default function EscenaAndamio({ inicio = 0 }: { inicio?: number }) {
         <Lightformer form="ring" intensity={4} position={[6, 3, 4]} scale={2} />
       </Environment>
 
-      <EffectComposer multisampling={4}>
-        <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.85} luminanceSmoothing={0.2} />
-        <Vignette offset={0.3} darkness={0.55} />
-      </EffectComposer>
+      {!movil && (
+        <EffectComposer multisampling={4}>
+          <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.85} luminanceSmoothing={0.2} />
+          <Vignette offset={0.3} darkness={0.55} />
+        </EffectComposer>
+      )}
     </Canvas>
   );
 }
