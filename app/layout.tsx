@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import type { ReactNode } from 'react';
-import Cursor from '@/components/efectos/Cursor';
 import SmoothScroll from '@/components/efectos/SmoothScroll';
 import './globals.css';
 
@@ -39,7 +38,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="grain bg-ink-950 font-sans text-ink-900 antialiased">
         <SmoothScroll />
-        <Cursor />
         {children}
       </body>
     </html>

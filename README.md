@@ -62,10 +62,10 @@ En GitHub, *Settings → Pages → Source* tiene que estar en **GitHub Actions**
   al mouse y se inclina con el scroll (`components/efectos/EscenaAndamio.tsx`).
 - **Proceso**: en escritorio la sección se clava y los pasos pasan de costado.
 - Tarjetas que se inclinan, halos que siguen al cursor, botones magnéticos,
-  precios que cuentan, cursor propio y grano de película.
+  precios que cuentan y grano de película.
 
-Quien tenga activado "reducir movimiento" en el sistema no ve la intro, el
-scroll suave ni el cursor propio.
+Quien tenga activado "reducir movimiento" en el sistema no ve la intro ni el
+scroll suave.
 
 ## Tema de WordPress
 
