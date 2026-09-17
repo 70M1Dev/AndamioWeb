@@ -5,61 +5,86 @@ Sitio de **Andamio Web** — diseño y desarrollo de páginas web en Uruguay.
 ## Arquitectura
 
 ```
-   Visitante ──► LANDING ESTÁTICA (este repo)
-                 GitHub Pages · index.html + assets/
-                 HTML + Tailwind compilado, sin JavaScript de framework
+   Visitante ──► SITIO (este repo)
+                 Next.js + React, exportado a estático (out/)
+                 GitHub Pages, publicado por GitHub Actions
                       │
-                      │  link "Área de clientes"
+                      │  link "Área de clientes" → Iniciar sesión
                       ▼
-                 WORDPRESS (subdominio, Hostinger)
+                 WORDPRESS (dominio temporal de Hostinger)
                  solo Fluent Support: tickets de soporte
 ```
 
-La landing no necesita WordPress: es contenido fijo. WordPress se usa únicamente
-para el área de clientes, que sí necesita login y base de datos. Así la landing
-—que es lo que trae clientes— no depende de que el WordPress esté en pie.
+El sitio es la cara visible de la empresa y no vende nada, así que prioriza
+efectos visuales sobre peso: escena 3D (three.js), animaciones con Motion y
+scroll suave con Lenis. Aun así se exporta a HTML estático: no hay servidor de
+Node y GitHub Pages lo sirve igual que antes.
 
 ## Estructura
 
 | Ruta | Qué es |
 |------|--------|
-| `index.html` | La landing: planes, caso Lupa Ecoart, proceso, FAQ |
-| `soporte.html` | Área de clientes (provisoria, hasta que esté el WordPress) |
-| `logos.html` | Variantes del logo, herramienta interna |
-| `assets/css/andamio.css` | Tailwind compilado — **no editar a mano** |
-| `src/input.css` | Fuente de los estilos propios |
-| `tailwind.config.js` | Paleta y qué archivos escanea Tailwind |
+| `app/page.tsx` | La landing: arma las secciones en orden |
+| `app/soporte/` | Área de clientes (`/soporte`) |
+| `app/layout.tsx` | `<head>`, metadatos para compartir, tipografía Outfit |
+| `app/globals.css` | Tailwind 4: paleta (`@theme`) y estilos propios |
+| `lib/datos.ts` | **Textos, precios, planes, FAQ y links de WhatsApp** |
+| `components/secciones/` | Una sección de la landing por archivo |
+| `components/efectos/` | Piezas de animación reutilizables y la escena 3D |
+| `public/` | Se copia tal cual: favicon, logos, `CNAME`, `robots.txt`, `sitemap.xml`, `logos.html` |
 | `wp-theme/andamio/` | Tema de WordPress para el área de clientes |
-| `wp-theme/andamio.zip` | El tema empaquetado, listo para subir a WordPress |
+| `.github/workflows/deploy.yml` | Compila y publica en cada push a `main` |
+| `cotizador.html` | Herramienta interna, en `.gitignore`: nunca se publica |
 
-## Estilos
+Para cambiar un precio o un texto, casi siempre alcanza con `lib/datos.ts`.
 
-Después de tocar clases en cualquier `.html` o `.php`, hay que recompilar el CSS:
+## Comandos
 
 ```bash
-npx tailwindcss@3 -i src/input.css -o assets/css/andamio.css --minify
-cp assets/css/andamio.css wp-theme/andamio/assets/css/andamio.css
+npm install        # la primera vez
+npm run dev        # desarrollo con recarga en http://localhost:3000
+npm run build      # genera el sitio estático en out/
+npm run preview    # sirve out/ en http://localhost:8099
 ```
 
-El mismo CSS sirve a la landing estática y al tema de WordPress: la config
-escanea los dos. **No se usa el CDN de Tailwind**, que compila en el navegador
-del visitante y agrega ~120 KB de JavaScript.
+`npm run preview` usa http-server, que no resuelve `/soporte` sin extensión:
+localmente hay que abrir `/soporte.html`. GitHub Pages sí resuelve las dos.
 
-## Ver el sitio localmente
+## Publicar
+
+Hacer push a `main`. El workflow compila y publica solo; no se commitea `out/`.
+En GitHub, *Settings → Pages → Source* tiene que estar en **GitHub Actions**.
+
+## Efectos
+
+- **Intro**: el logo se dibuja y sube la cortina. Sale una vez por sesión.
+- **Hero**: andamio 3D que se arma pieza por pieza alrededor de una web, sigue
+  al mouse y se inclina con el scroll (`components/efectos/EscenaAndamio.tsx`).
+- **Proceso**: en escritorio la sección se clava y los pasos pasan de costado.
+- Tarjetas que se inclinan, halos que siguen al cursor, botones magnéticos,
+  precios que cuentan, cursor propio y grano de película.
+
+Quien tenga activado "reducir movimiento" en el sistema no ve la intro, el
+scroll suave ni el cursor propio.
+
+## Tema de WordPress
+
+Usa su propio Tailwind 3, separado del sitio:
 
 ```bash
-npx http-server -p 8099 -c-1
+npm run css:wp
 ```
 
 ## Paleta
 
 | Token | Color | Uso |
 |-------|-------|-----|
+| `ink-950` | `#0A0F18` | Fondo base oscuro |
 | `ink-900` | `#101826` | Fondos oscuros, texto principal |
 | `ink-800` | `#1B2536` | |
 | `ink-700` | `#2A3548` | Hover de botones oscuros |
 | `beam-500` | `#F5B400` | Amarillo de marca, llamadas a la acción |
 | `beam-400` | `#FFC53D` | Hover del amarillo |
-| `paper` | `#FAF8F3` | Fondo claro del cuerpo |
+| `paper` | `#FAF8F3` | Fondo claro |
 
-Tipografía: **Outfit** (Google Fonts).
+Tipografía: **Outfit** (servida por `next/font`, sin pedir a Google en cada visita).
