@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Reveal from '../efectos/Reveal';
 import { DEMO_CAPITULOS } from '@/lib/datos';
 
-// Video del recorrido completo con la tienda de Lupa Ecoart. No arranca solo:
+// Video del recorrido completo con la tienda de Lupa Ecoart, narrado. No arranca solo:
 // dura unos minutos y se mira con ganas. Los capítulos saltan a cada parte.
 export default function Demo() {
   const video = useRef<HTMLVideoElement>(null);
@@ -50,7 +50,7 @@ export default function Demo() {
             <video
               ref={video}
               className="block aspect-video w-full"
-              src="/video/demo-andamio.mp4"
+              src="/video/demo-andamio-voz-valentina.mp4"
               poster="/video/demo-andamio.jpg"
               controls
               playsInline
