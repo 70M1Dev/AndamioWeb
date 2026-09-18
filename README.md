@@ -32,7 +32,6 @@ Node y GitHub Pages lo sirve igual que antes.
 | `components/secciones/` | Una sección de la landing por archivo |
 | `components/efectos/` | Piezas de animación reutilizables y la escena 3D |
 | `public/` | Se copia tal cual: favicon, logos, `CNAME`, `robots.txt`, `sitemap.xml`, `logos.html` |
-| `wp-theme/andamio/` | Tema de WordPress para el área de clientes |
 | `.github/workflows/deploy.yml` | Compila y publica en cada push a `main` |
 | `cotizador.html` | Herramienta interna, en `.gitignore`: nunca se publica |
 
@@ -66,14 +65,6 @@ En GitHub, *Settings → Pages → Source* tiene que estar en **GitHub Actions**
 
 Quien tenga activado "reducir movimiento" en el sistema no ve la intro ni el
 scroll suave.
-
-## Tema de WordPress
-
-Usa su propio Tailwind 3, separado del sitio:
-
-```bash
-npm run css:wp
-```
 
 ## Paleta
 

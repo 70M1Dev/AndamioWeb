@@ -117,19 +117,15 @@ export const FAQ = [
   },
   {
     p: '¿Cuánto tarda en estar lista?',
-    r: 'Una landing, entre 7 y 10 días hábiles. Una web institucional, 2 a 3 semanas. Una tienda online, 3 a 5 semanas. Los plazos corren desde que tenemos tus textos, fotos y logo.',
+    r: 'El primer boceto visual de tu página está listo en 24 a 48 horas. Después definimos juntos el plazo para publicarla.',
   },
   {
     p: '¿Cómo se paga?',
-    r: '50 % para empezar y 50 % antes de publicar. Aceptamos transferencia bancaria y Mercado Pago.',
-  },
-  {
-    p: '¿Voy a poder editar mi web?',
-    r: 'Sí. Te dejamos acceso y una capacitación para cambiar textos, fotos, productos y precios sin depender de nadie.',
+    r: '50 % para empezar y 50 % antes de publicar. Aceptamos efectivo, transferencia bancaria, Mercado Pago y PayPal.',
   },
   {
     p: '¿Qué pasa si necesito cambios después?',
-    r: 'Abrís un ticket desde tu área de clientes y lo seguís hasta que esté resuelto. Los cambios chicos del primer mes están incluidos; después podés sumar el mantenimiento mensual.',
+    r: 'Abrís un ticket desde tu área de clientes y evaluamos el pedido según la escala del cambio. Si es un cambio grande, te lo cotizamos.',
   },
   {
     p: '¿Trabajan con negocios de todo Uruguay?',

@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "preview": "npx http-server out -p 8099 -c-1",
-    "css:wp": "npx tailwindcss@3 -c wp-theme/tailwind.config.js -i wp-theme/input.css -o wp-theme/andamio/assets/css/andamio.css --minify"
+    "preview": "npx http-server out -p 8099 -c-1"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

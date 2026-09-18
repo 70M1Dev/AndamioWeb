@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /wp-theme/
 Disallow: /logos.html
 
 Sitemap: https://andamioweb.com/sitemap.xml
