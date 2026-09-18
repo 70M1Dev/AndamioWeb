@@ -6,10 +6,9 @@ export const wa = (texto?: string) =>
 
 export const WA_CONSULTA = wa('¡Hola! Quiero consultar por una página web.');
 
-// Portal de clientes: el WordPress con Fluent Support, en el dominio temporal de
-// Hostinger. Apunta a /soporte/ porque esa página ya trae el login con el diseño
-// de Andamio. Si se vacía, el botón "Iniciar sesión" queda desactivado.
-export const PANEL_URL = 'https://blueviolet-stinkbug-914444.hostingersite.com/soporte/';
+// Panel de clientes (repo AndamioPanel, en Cloudflare). Si se vacía, el botón
+// "Iniciar sesión" de /soporte queda desactivado.
+export const PANEL_URL = 'https://panel.andamioweb.com';
 
 export const NAV = [
   { href: '/#planes', label: 'Planes' },

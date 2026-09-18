@@ -11,8 +11,8 @@ Sitio de **Andamio Web** — diseño y desarrollo de páginas web en Uruguay.
                       │
                       │  link "Área de clientes" → Iniciar sesión
                       ▼
-                 WORDPRESS (dominio temporal de Hostinger)
-                 solo Fluent Support: tickets de soporte
+                 PANEL DE CLIENTES (panel.andamioweb.com)
+                 repo AndamioPanel, en Cloudflare: tickets de soporte
 ```
 
 El sitio es la cara visible de la empresa y no vende nada, así que prioriza
