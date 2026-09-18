@@ -11,7 +11,7 @@ const titulo = 'Andamio Web — Construimos la web de tu negocio';
 export const metadata: Metadata = {
   metadataBase: new URL('https://andamioweb.com'),
   title: titulo,
-  description: 'Páginas web, webs institucionales y tiendas online para negocios de Uruguay. Diseño a medida, adaptadas al celular y con WhatsApp integrado.',
+  description: 'Landings empresariales, tiendas online y webs con sistema de reservas para negocios de Uruguay. Diseño a medida, adaptadas al celular y con WhatsApp integrado.',
   icons: { icon: { url: '/favicon.svg', type: 'image/svg+xml' } },
   alternates: { canonical: '/' },
   openGraph: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: 'Andamio Web',
     url: '/',
     title: titulo,
-    description: 'Landings, webs institucionales y tiendas online para negocios de Uruguay. Rápidas, pensadas para el celular y conectadas a tu WhatsApp.',
+    description: 'Landings empresariales, tiendas online y webs con reservas para negocios de Uruguay. Rápidas, pensadas para el celular y conectadas a tu WhatsApp.',
     locale: 'es_UY',
   },
   twitter: { card: 'summary_large_image' },

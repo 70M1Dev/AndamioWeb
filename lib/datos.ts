@@ -27,7 +27,7 @@ export const BENEFICIOS = [
 
 export const CINTA = [
   'Diseño a medida', 'Tiendas online', 'Mercado Pago', 'WhatsApp integrado',
-  'Primero el celular', 'Webs institucionales', 'Soporte con tickets', 'Hecho en Uruguay',
+  'Primero el celular', 'Reservas online', 'Soporte con tickets', 'Hecho en Uruguay',
 ];
 
 export type Plan = {
@@ -39,8 +39,8 @@ export type Plan = {
 
 export const PLANES: Plan[] = [
   {
-    nombre: 'Landing',
-    bajada: 'Para presentar un producto, servicio o emprendimiento.',
+    nombre: 'Landing empresarial',
+    bajada: 'Para presentar tu empresa, servicio o emprendimiento en una sola página.',
     items: [
       'Una página con todas tus secciones',
       'Diseño adaptado a celular',
@@ -63,13 +63,14 @@ export const PLANES: Plan[] = [
     ],
   },
   {
-    nombre: 'Web institucional',
-    bajada: 'Para empresas y profesionales que necesitan presencia completa.',
+    nombre: 'Web + Sistema de reservas',
+    bajada: 'Para que tus clientes reserven turnos solos, a cualquier hora.',
     items: [
-      'Hasta 5 secciones (inicio, nosotros, servicios, contacto…)',
-      'Novedades o blog que podés actualizar vos',
-      'Formularios, mapa y WhatsApp',
-      'Planes de servicios personalizables',
+      'Web con tus servicios, equipo y contacto',
+      'Agenda online con tus días y horarios',
+      'Confirmación de reservas por WhatsApp o correo',
+      'Panel para ver, mover y cancelar turnos',
+      'Bloqueo de feriados, vacaciones y horarios',
       'Boceto en 48 hs',
     ],
   },

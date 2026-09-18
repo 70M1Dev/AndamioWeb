@@ -109,7 +109,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.8, delay: base + 0.7 }}
           >
-            Landings, webs institucionales y tiendas online hechas a medida. Rápidas, pensadas para el celular y conectadas a tu WhatsApp.
+            Landings empresariales, tiendas online y webs con reservas, hechas a medida. Rápidas, pensadas para el celular y conectadas a tu WhatsApp.
           </motion.p>
 
           <motion.div
