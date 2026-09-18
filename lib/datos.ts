@@ -102,6 +102,15 @@ export const CASO_PASOS = [
   'Panel para cargar productos, fotos, stock y pedidos.',
 ];
 
+// Capítulos del video de la sección Demo (segundo en que empieza cada parte).
+export const DEMO_CAPITULOS = [
+  { titulo: 'Tu tienda', segundo: 12.7 },
+  { titulo: 'Compras', segundo: 56 },
+  { titulo: 'Pedidos', segundo: 90.5 },
+  { titulo: 'Soporte', segundo: 110.4 },
+  { titulo: 'En el celular', segundo: 181 },
+];
+
 export const PROCESO = [
   { titulo: 'Charlamos', texto: 'Planificamos una charla presencial o virtual. Nos contás qué hacés, qué necesitás y qué mostrás o vendés.' },
   { titulo: 'Presupuesto', texto: 'Seleccionamos un plan, armamos un presupuesto por todo el conjunto y cerramos fecha de entrega.' },

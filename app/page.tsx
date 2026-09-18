@@ -6,6 +6,7 @@ import Beneficios from '@/components/secciones/Beneficios';
 import Caso from '@/components/secciones/Caso';
 import Cinta from '@/components/secciones/Cinta';
 import Cta from '@/components/secciones/Cta';
+import Demo from '@/components/secciones/Demo';
 import Faq from '@/components/secciones/Faq';
 import Hero from '@/components/secciones/Hero';
 import Planes from '@/components/secciones/Planes';
@@ -22,6 +23,7 @@ export default function Home() {
         <Beneficios />
         <Planes />
         <Caso />
+        <Demo />
         <Proceso />
         <Faq />
         <Cta />
