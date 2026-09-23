@@ -3,7 +3,7 @@
 import { motion, useInView } from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { wa } from '@/lib/datos';
+import { INSTAGRAM, wa } from '@/lib/datos';
 
 const LETRAS = 'ANDAMIO'.split('');
 
@@ -23,6 +23,7 @@ export default function Footer() {
         <div className="flex gap-6">
           <Link href="/soporte" className="transition hover:text-beam-400">Área de clientes</Link>
           <a href={wa()} target="_blank" rel="noopener" className="transition hover:text-beam-400">WhatsApp</a>
+          <a href={INSTAGRAM} target="_blank" rel="noopener" className="transition hover:text-beam-400">Instagram</a>
         </div>
       </div>
 

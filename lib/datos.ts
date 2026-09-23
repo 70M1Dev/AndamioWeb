@@ -5,6 +5,9 @@ export const wa = (texto?: string) =>
   `https://wa.me/${WHATSAPP}` + (texto ? `?text=${encodeURIComponent(texto)}` : '');
 
 export const WA_CONSULTA = wa('¡Hola! Quiero consultar por una página web.');
+export const WA_BOCETO = wa('¡Hola! Quiero pedir el boceto gratis de mi página web.');
+
+export const INSTAGRAM = 'https://www.instagram.com/andamio.web/';
 
 // Panel de clientes (repo AndamioPanel, en Cloudflare). Si se vacía, el botón
 // "Iniciar sesión" de /soporte queda desactivado.
@@ -46,7 +49,7 @@ export const PLANES: Plan[] = [
       'Diseño adaptado a celular',
       'Botón de WhatsApp y formulario de contacto',
       'Mapa de ubicación',
-      'Boceto en 24 hs',
+      'Boceto gratis en 24 hs',
     ],
   },
   {
@@ -59,7 +62,7 @@ export const PLANES: Plan[] = [
       'Métodos de pago, con tarjeta por Mercado Pago',
       'Cupones de descuento y costos de envío',
       'Panel para gestionar productos, stock y pedidos',
-      'Boceto en 48 hs',
+      'Boceto gratis en 48 hs',
     ],
   },
   {
@@ -71,7 +74,7 @@ export const PLANES: Plan[] = [
       'Confirmación de reservas por WhatsApp o correo',
       'Panel para ver, mover y cancelar turnos',
       'Bloqueo de feriados, vacaciones y horarios',
-      'Boceto en 48 hs',
+      'Boceto gratis en 48 hs',
     ],
   },
 ];
@@ -112,21 +115,25 @@ export const DEMO_CAPITULOS = [
 ];
 
 export const PROCESO = [
-  { titulo: 'Charlamos', texto: 'Planificamos una charla presencial o virtual. Nos contás qué hacés, qué necesitás y qué mostrás o vendés.' },
-  { titulo: 'Presupuesto', texto: 'Seleccionamos un plan, armamos un presupuesto por todo el conjunto y cerramos fecha de entrega.' },
-  { titulo: 'Diseño', texto: 'Primer boceto: te mostramos la primera vista de la página y la ajustamos con tus comentarios.' },
-  { titulo: 'Construcción', texto: 'Armamos la web, cargamos el contenido y probamos todo.' },
-  { titulo: 'Lanzamiento', texto: 'Publicamos la página y seguimos comunicados mediante el soporte desde tu panel.' },
+  { titulo: 'Charlamos', texto: 'Por WhatsApp, videollamada o en persona. Nos contás qué hacés, qué necesitás y qué mostrás o vendés.' },
+  { titulo: 'Boceto gratis', texto: 'En 24 a 48 horas te mostramos la primera vista de tu página. Sin costo y sin compromiso.' },
+  { titulo: 'Presupuesto', texto: 'Con el boceto a la vista, elegimos el plan, armamos un presupuesto por todo el conjunto y cerramos fecha de entrega.' },
+  { titulo: 'Construcción', texto: 'Armamos la web, cargamos el contenido, la ajustamos con tus comentarios y probamos todo.' },
+  { titulo: 'Lanzamiento', texto: 'Publicamos la página a tu nombre y seguimos comunicados mediante el soporte desde tu panel.' },
 ];
 
 export const FAQ = [
+  {
+    p: '¿El boceto tiene costo?',
+    r: 'No. Te mostramos cómo se vería la primera vista de tu página antes de pedirte nada. Si te gusta, armamos el presupuesto; si no, no pasa nada.',
+  },
   {
     p: '¿El presupuesto incluye dominio y hosting?',
     r: 'No, se cotizan aparte. Si ya tenés, usamos los tuyos; si no, te ayudamos a contratarlos a tu nombre para que siempre sean tuyos.',
   },
   {
     p: '¿Cuánto tarda en estar lista?',
-    r: 'El primer boceto visual de tu página está listo en 24 a 48 horas. Después definimos juntos el plazo para publicarla.',
+    r: 'El boceto de tu página está listo en 24 a 48 horas, y es gratis. Después definimos juntos el plazo para publicarla.',
   },
   {
     p: '¿Cómo se paga?',

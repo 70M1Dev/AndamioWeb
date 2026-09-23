@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import type { ReactNode } from 'react';
 import SmoothScroll from '@/components/efectos/SmoothScroll';
+import { CONSULTA_LIVIANO } from '@/lib/dispositivo';
 import './globals.css';
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], variable: '--font-outfit' });
@@ -21,14 +22,17 @@ export const metadata: Metadata = {
     title: titulo,
     description: 'Landings empresariales, tiendas online y webs con reservas para negocios de Uruguay. Rápidas, pensadas para el celular y conectadas a tu WhatsApp.',
     locale: 'es_UY',
+    // Es la vista previa cuando se pasa el link por WhatsApp o redes.
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Andamio Web — Construimos la web de tu negocio' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: ['/og.png'] },
 };
 
 export const viewport: Viewport = { themeColor: '#0A0F18' };
 
-// Decide antes del primer pintado si se muestra la intro (una vez por sesión).
-const scriptIntro = `try{if(sessionStorage.getItem('intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('sin-intro')}catch(e){}`;
+// Decide antes del primer pintado si se muestra la intro: una vez por sesión,
+// nunca en celular ni para quien pidió menos movimiento.
+const scriptIntro = `try{if(sessionStorage.getItem('intro')||matchMedia('(prefers-reduced-motion: reduce), ${CONSULTA_LIVIANO}').matches)document.documentElement.classList.add('sin-intro')}catch(e){}`;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

@@ -7,6 +7,7 @@ import { BENEFICIOS } from '@/lib/datos';
 export default function Beneficios() {
   return (
     <section className="relative bg-ink-950 text-white">
+      <h2 className="sr-only">Qué incluye tu web</h2>
       <div className="mx-auto grid max-w-6xl gap-5 px-4 py-24 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         {BENEFICIOS.map((b, i) => (
           <motion.div

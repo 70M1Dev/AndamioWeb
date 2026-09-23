@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import IconoWhatsApp from '../IconoWhatsApp';
 import Magnetico from '../efectos/Magnetico';
-import { wa } from '@/lib/datos';
+import { WA_BOCETO } from '@/lib/datos';
 
 // Andamio dibujado en SVG que se arma con el scroll, detrás del llamado final.
 const LINEAS = [
@@ -44,17 +44,17 @@ export default function Cta() {
           >
             ¿Empezamos a construir tu web?
           </motion.h2>
-          <p className="mt-5 text-lg text-ink-800/80">Contanos tu idea y te pasamos un presupuesto sin compromiso.</p>
+          <p className="mt-5 text-lg text-ink-800/80">Contanos tu idea y en 48 horas te mostramos un boceto gratis, sin compromiso.</p>
           <Magnetico className="mt-10 inline-block" fuerza={0.5}>
             <a
-              href={wa('¡Hola! Quiero un presupuesto para mi página web.')}
+              href={WA_BOCETO}
               target="_blank"
               rel="noopener"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-ink-900 px-9 py-5 text-lg font-semibold text-white shadow-2xl shadow-ink-900/40"
             >
               <span className="absolute inset-0 origin-left scale-x-0 bg-[#1FAF38] transition-transform duration-500 ease-out group-hover:scale-x-100" />
               <IconoWhatsApp className="relative h-6 w-6" />
-              <span className="relative">Pedir presupuesto por WhatsApp</span>
+              <span className="relative">Pedir boceto gratis por WhatsApp</span>
             </a>
           </Magnetico>
         </div>

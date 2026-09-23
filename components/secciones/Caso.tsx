@@ -70,8 +70,8 @@ export default function Caso() {
           <motion.div style={{ scale: escala }} className="relative rounded-[2rem] bg-[#E6EBB1] p-8 md:p-10">
             <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,#fff8,transparent_60%)]" />
             <motion.div style={{ y: yVentana, rotate: giro }} className="relative overflow-hidden rounded-2xl bg-white shadow-2xl shadow-[#8F9B2F]/30">
-              <div className="flex h-10 items-center gap-2 bg-[#8F9B2F] px-4 text-sm font-semibold text-white">
-                <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
+              <div className="flex h-10 items-center gap-2 bg-[#8F9B2F] px-4 text-sm font-semibold text-ink-900">
+                <span className="h-2.5 w-2.5 rounded-full bg-ink-900/40" />
                 Lupa Ecoart
               </div>
               <div className="grid grid-cols-2 gap-4 p-5">

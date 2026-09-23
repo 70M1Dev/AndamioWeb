@@ -41,7 +41,7 @@ export default function Navbar() {
             : 'h-16 max-w-6xl border-transparent bg-transparent px-3'
         }`}
       >
-        <Link href="/" onClick={e => click(e, '/#top')} aria-label="Andamio Web, inicio">
+        <Link href="/" onClick={e => click(e, '/#top')}>
           <Logo />
         </Link>
 

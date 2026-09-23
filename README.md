@@ -15,10 +15,11 @@ Sitio de **Andamio Web** — diseño y desarrollo de páginas web en Uruguay.
                  repo AndamioPanel, en Cloudflare: tickets de soporte
 ```
 
-El sitio es la cara visible de la empresa y no vende nada, así que prioriza
-efectos visuales sobre peso: escena 3D (three.js), animaciones con Motion y
-scroll suave con Lenis. Aun así se exporta a HTML estático: no hay servidor de
-Node y GitHub Pages lo sirve igual que antes.
+El sitio es el principal vendedor de la empresa: todo termina en un WhatsApp
+para pedir el boceto gratis. Tiene efectos visuales (escena 3D con three.js,
+animaciones con Motion, scroll suave con Lenis), pero solo en escritorio: en
+celular, que es de donde entra la mayoría, manda la velocidad de carga. Se
+exporta a HTML estático: no hay servidor de Node y GitHub Pages lo sirve tal cual.
 
 ## Estructura
 
@@ -31,7 +32,8 @@ Node y GitHub Pages lo sirve igual que antes.
 | `lib/datos.ts` | **Textos, precios, planes, FAQ y links de WhatsApp** |
 | `components/secciones/` | Una sección de la landing por archivo |
 | `components/efectos/` | Piezas de animación reutilizables y la escena 3D |
-| `public/` | Se copia tal cual: favicon, logos, `CNAME`, `robots.txt`, `sitemap.xml`, `logos.html` |
+| `lib/dispositivo.ts` | Qué cuenta como celular (sin intro, 3D ni scroll suave) |
+| `public/` | Se copia tal cual: favicon, logos, `og.png` (vista previa al compartir), `CNAME`, `robots.txt`, `sitemap.xml`, `logos.html` |
 | `.github/workflows/deploy.yml` | Compila y publica en cada push a `main` |
 | `cotizador.html` | Herramienta interna, en `.gitignore`: nunca se publica |
 
@@ -56,15 +58,23 @@ En GitHub, *Settings → Pages → Source* tiene que estar en **GitHub Actions**
 
 ## Efectos
 
-- **Intro**: el logo se dibuja y sube la cortina. Sale una vez por sesión.
+- **Intro**: el logo se dibuja y sube la cortina. Sale una vez por sesión y
+  nunca en celular.
 - **Hero**: andamio 3D que se arma pieza por pieza alrededor de una web, sigue
   al mouse y se inclina con el scroll (`components/efectos/EscenaAndamio.tsx`).
+  Se carga cuando el navegador queda libre, para no trabar la primera carga;
+  en celular hay un andamio dibujado en SVG en su lugar. Las entradas del texto
+  son CSS (`.hero-entra`, `.hero-palabra`) para que no esperen al JavaScript.
 - **Proceso**: en escritorio la sección se clava y los pasos pasan de costado.
 - Tarjetas que se inclinan, halos que siguen al cursor, botones magnéticos,
   precios que cuentan y grano de película.
 
-Quien tenga activado "reducir movimiento" en el sistema no ve la intro ni el
-scroll suave.
+Quien tenga activado "reducir movimiento" en el sistema, o entre desde un
+celular o tablet, no ve la intro ni el scroll suave.
+
+Medición con Lighthouse en celular (23/9/2026): rendimiento 95, bloqueo del
+hilo principal 50 ms (antes 37 y 4.090 ms). Si se agrega un efecto, volver a
+medir en celular antes de publicar.
 
 ## Paleta
 

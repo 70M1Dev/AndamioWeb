@@ -26,9 +26,18 @@ html { background: var(--color-ink-950); }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
-/* La intro sale una vez por sesión (ver el script del layout) */
+/* La intro sale una vez por sesión y nunca en celular (ver el script del layout) */
 .sin-intro #intro { display: none; }
 
+/* Entradas del hero en CSS: arrancan con el primer pintado, sin esperar al
+   JavaScript. Con intro esperan a que suba la cortina (DURACION_INTRO - 0,2 s). */
+:root { --base: .1s; }
+html:not(.sin-intro) { --base: 1.5s; }
+.hero-entra { animation: hero-entra .7s cubic-bezier(.22, 1, .36, 1) calc(var(--base) + var(--d, 0s)) both; }
+.hero-desenfoque { --desenfoque: 8px; animation-duration: .8s; }
+.hero-palabra { animation: hero-palabra .9s cubic-bezier(.22, 1, .36, 1) calc(var(--base) + var(--d, 0s)) both; }
+@keyframes hero-entra { from { opacity: 0; transform: translateY(20px); filter: blur(var(--desenfoque, 0)); } }
+@keyframes hero-palabra { from { transform: translateY(110%) rotate(6deg); } }
 ::selection { background: var(--color-beam-500); color: var(--color-ink-900); }
 
 /* Trama de andamio */
@@ -61,4 +70,5 @@ html.lenis, html.lenis body { height: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .hero-entra, .hero-palabra { animation: none; }
 }
