@@ -14,12 +14,16 @@ import { irA } from '@/lib/scroll';
 const EscenaAndamio = dynamic(() => import('../efectos/EscenaAndamio'), { ssr: false });
 
 const TITULO = ['Construimos', 'la', 'web', 'de', 'tu', 'negocio.'];
+// Debajo de los botones. Son cosas que el sitio ya dice más abajo.
+const GARANTIAS = ['Sin compromiso', 'Para todo Uruguay', 'Soporte con tickets'];
 
 // Retraso de cada entrada, sumado a --base (ver .hero-entra en globals.css).
 const retraso = (s: number) => ({ '--d': `${s}s` }) as CSSProperties;
 
-// Andamio estático para celular, en lugar de la escena 3D.
+// Andamio para celular, en lugar de la escena 3D: se dibuja solo con CSS
+// (.hero-trazo y .hero-nudo en globals.css), sin costo de JavaScript.
 const TRAZOS = ['M40 300V20', 'M160 300V20', 'M280 300V20', 'M40 100H280', 'M40 200H280', 'M40 100L160 200', 'M160 200L280 100', 'M40 300L160 200', 'M160 100L280 200'];
+const NUDOS = [[40, 100], [160, 100], [280, 100], [40, 200], [160, 200], [280, 200]];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -101,11 +105,24 @@ export default function Hero() {
         </motion.div>
       )}
       {modo === 'movil' && (
-        <svg aria-hidden="true" viewBox="0 0 320 320" className="absolute -right-16 top-24 -z-10 w-[26rem] opacity-25">
-          {TRAZOS.map(d => (
-            <path key={d} d={d} stroke="#F5B400" strokeWidth="5" strokeLinecap="round" fill="none" />
-          ))}
-        </svg>
+        <>
+          {/* Un degradado en vez del aura con blur de escritorio: no cuesta nada.
+              La máscara del andamio lo hace asomar recién debajo del menú y
+              lo apaga antes de llegar al título. */}
+          <div aria-hidden="true" className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_92%_6%,rgb(245_180_0/.22),transparent_55%)]" />
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 320 320"
+            className="absolute -right-20 -top-10 -z-10 w-[27rem] opacity-45 [mask-image:linear-gradient(to_bottom,transparent_20%,black_31%,black_38%,transparent_62%)]"
+          >
+            {TRAZOS.map((d, i) => (
+              <path key={d} d={d} pathLength={1} className="hero-trazo" style={retraso(0.2 + i * 0.09)} stroke="#F5B400" strokeWidth="4" strokeLinecap="round" fill="none" />
+            ))}
+            {NUDOS.map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r="7" fill="#FFC53D" className="hero-nudo" style={retraso(1.2 + i * 0.06)} />
+            ))}
+          </svg>
+        </>
       )}
       {/* En celular el texto va sobre el 3D: un velo lo hace legible */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/30 via-ink-950/60 to-ink-950 md:bg-gradient-to-r md:from-ink-950 md:via-ink-950/50 md:to-transparent" />
@@ -163,6 +180,17 @@ export default function Hero() {
               </a>
             </Magnetico>
           </div>
+
+          <ul className="hero-entra mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60" style={retraso(1.05)}>
+            {GARANTIAS.map(g => (
+              <li key={g} className="flex items-center gap-1.5">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4 text-beam-400" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3.5 8.5l3 3 6-7" />
+                </svg>
+                {g}
+              </li>
+            ))}
+          </ul>
         </div>
       </motion.div>
 

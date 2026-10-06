@@ -13,28 +13,28 @@ export const INSTAGRAM = 'https://www.instagram.com/andamio.web/';
 // "Iniciar sesión" de /soporte queda desactivado.
 export const PANEL_URL = 'https://panel.andamioweb.com';
 
+// En el mismo orden en que aparecen las secciones en la home.
 export const NAV = [
-  { href: '/#planes', label: 'Planes' },
   { href: '/#caso', label: 'Casos' },
+  { href: '/#planes', label: 'Planes' },
   { href: '/#proceso', label: 'Cómo trabajamos' },
   { href: '/#faq', label: 'Preguntas' },
   { href: '/soporte', label: 'Área de clientes' },
 ];
 
-export const BENEFICIOS = [
-  { icono: '🎨', titulo: 'Diseño a medida', texto: 'Con tu identidad, tus colores y tus fotos. Nada de plantillas genéricas.' },
-  { icono: '📱', titulo: 'Primero el celular', texto: 'La mayoría de tus clientes te va a ver desde el teléfono.' },
-  { icono: '💬', titulo: 'WhatsApp integrado', texto: 'Consultas y pedidos que llegan directo a tu WhatsApp.' },
-  { icono: '🛠️', titulo: 'Soporte con tickets', texto: 'Tenés tu área de clientes para pedir cambios y seguir cada pedido.' },
-];
+// `dibujo` elige la ilustración animada de cada tarjeta (ver Beneficios.tsx).
+export type Beneficio = { dibujo: 'diseno' | 'celular' | 'whatsapp' | 'soporte'; titulo: string; texto: string };
 
-export const CINTA = [
-  'Diseño a medida', 'Tiendas online', 'Mercado Pago', 'WhatsApp integrado',
-  'Primero el celular', 'Reservas online', 'Soporte con tickets', 'Hecho en Uruguay',
+export const BENEFICIOS: Beneficio[] = [
+  { dibujo: 'diseno', titulo: 'Diseño a medida', texto: 'Con tu identidad, tus colores y tus fotos. Nada de plantillas genéricas.' },
+  { dibujo: 'celular', titulo: 'Primero el celular', texto: 'La mayoría de tus clientes te va a ver desde el teléfono.' },
+  { dibujo: 'whatsapp', titulo: 'WhatsApp integrado', texto: 'Consultas y pedidos que llegan directo a tu WhatsApp.' },
+  { dibujo: 'soporte', titulo: 'Soporte con tickets', texto: 'Tenés tu área de clientes para pedir cambios y seguir cada pedido.' },
 ];
 
 export type Plan = {
   nombre: string;
+  icono: 'landing' | 'tienda' | 'reservas';
   bajada: string;
   items: string[];
   destacado?: boolean;
@@ -43,6 +43,7 @@ export type Plan = {
 export const PLANES: Plan[] = [
   {
     nombre: 'Landing empresarial',
+    icono: 'landing',
     bajada: 'Para presentar tu empresa, servicio o emprendimiento en una sola página.',
     items: [
       'Una página con todas tus secciones',
@@ -54,6 +55,7 @@ export const PLANES: Plan[] = [
   },
   {
     nombre: 'Tienda online',
+    icono: 'tienda',
     bajada: 'Para vender tus productos las 24 horas.',
     destacado: true,
     items: [
@@ -67,6 +69,7 @@ export const PLANES: Plan[] = [
   },
   {
     nombre: 'Web + Sistema de reservas',
+    icono: 'reservas',
     bajada: 'Para que tus clientes reserven turnos solos, a cualquier hora.',
     items: [
       'Web con tus servicios, equipo y contacto',
@@ -98,11 +101,70 @@ export const AGREGADOS = [
   'Mantenimiento mensual',
 ];
 
-export const CASO_PASOS = [
-  'Catálogo con buscador, categorías y filtro de precio.',
-  'Stock sincronizado: nadie compra algo que no hay.',
-  'Checkout con transferencia, WhatsApp, cupones y envío.',
-  'Panel para cargar productos, fotos, stock y pedidos.',
+// Trabajos de la sección Casos. Para sacar uno, se borra su bloque entero.
+// Las capturas están en public/casos: las de escritorio de un mismo caso
+// tienen todas la misma proporción (`proporcion`), y `celular` es la que asoma
+// por delante.
+export type Caso = {
+  nombre: string;
+  tipo: string;
+  etiqueta: string;
+  texto: string;
+  puntos: string[];
+  enlace?: { href: string; texto: string };
+  barra: string; // lo que dice la barra del navegador dibujado
+  fondo: string;
+  proporcion: string;
+  capturas: { src: string; nombre: string; alt: string }[];
+  celular: { src: string; alt: string; ancho: number; alto: number };
+  nota: string;
+};
+
+export const CASOS: Caso[] = [
+  {
+    nombre: 'Lupa Ecoart',
+    tipo: 'Tienda online',
+    etiqueta: 'Cliente',
+    texto: 'Tienda online de papelería, corte láser y productos reciclables. Construimos el catálogo, el carrito y un panel propio para que la dueña maneje todo desde el celular.',
+    puntos: [
+      'Catálogo con buscador, categorías y filtro de precio.',
+      'Stock sincronizado: nadie compra algo que no hay.',
+      'Checkout con transferencia, WhatsApp, cupones y envío.',
+      'Panel para cargar productos, fotos, stock y pedidos.',
+    ],
+    enlace: { href: 'https://lupaecoart.site', texto: 'Visitar lupaecoart.site' },
+    barra: 'lupaecoart.site',
+    fondo: '#E6EBB1',
+    proporcion: '1280 / 672',
+    capturas: [
+      { src: '/casos/lupa-tienda.webp', nombre: 'La tienda', alt: 'Portada de la tienda de Lupa Ecoart con sus productos destacados' },
+      { src: '/casos/lupa-producto.webp', nombre: 'Un producto', alt: 'Ficha de un producto en la tienda de Lupa Ecoart, con medidas y botón de compra' },
+      { src: '/casos/lupa-panel.webp', nombre: 'El panel', alt: 'Panel de Lupa Ecoart para manejar productos y stock' },
+    ],
+    celular: { src: '/casos/lupa-celular.webp', alt: 'La tienda de Lupa Ecoart vista en un celular', ancho: 780, alto: 1560 },
+    nota: 'Capturas de la demo, con productos de ejemplo.',
+  },
+  {
+    nombre: 'Pc Fix',
+    tipo: 'Web + sistema a medida',
+    etiqueta: 'Proyecto propio',
+    texto: 'Servicio técnico de PC y notebooks en Montevideo. Además de la web, armamos un sistema para llevar las reparaciones: el taller carga cada orden y el cliente sigue su equipo desde el celular.',
+    puntos: [
+      'Web con servicios, agenda y pedido de cotización.',
+      'Panel interno con las órdenes de reparación y su estado.',
+      'Seguimiento online: el cliente consulta su equipo con un código.',
+      'Constancias con firma en pantalla, listas en PDF.',
+    ],
+    barra: 'Pc Fix',
+    fondo: '#DCE7FF',
+    proporcion: '1280 / 800',
+    capturas: [
+      { src: '/casos/pcfix-inicio.webp', nombre: 'La web', alt: 'Portada del sitio de Pc Fix, servicio técnico de computadoras' },
+      { src: '/casos/pcfix-panel.webp', nombre: 'El panel', alt: 'Panel de Pc Fix con las órdenes de reparación y su estado' },
+    ],
+    celular: { src: '/casos/pcfix-celular.webp', alt: 'Seguimiento de una reparación de Pc Fix visto en un celular', ancho: 780, alto: 1400 },
+    nota: 'Capturas con datos de ejemplo.',
+  },
 ];
 
 // Capítulos del video de la sección Demo (segundo en que empieza cada parte).

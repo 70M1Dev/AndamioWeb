@@ -5,6 +5,13 @@ import Inclinable from '../efectos/Inclinable';
 import Reveal from '../efectos/Reveal';
 import { AGREGADOS, FACTORES, PLANES, wa, type Plan } from '@/lib/datos';
 
+// Un ícono por plan, con el mismo trazo que el logo.
+const ICONOS: Record<Plan['icono'], string> = {
+  landing: 'M4 6.5A1.5 1.5 0 0 1 5.5 5h13A1.5 1.5 0 0 1 20 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5zM4 9h16M8 12.5h5M8 15.5h8',
+  tienda: 'M6 8h12l-1 11.5H7zM9 8V7a3 3 0 0 1 6 0v1',
+  reservas: 'M5 6.5h14v13H5zM5 10h14M8.5 4.5v3M15.5 4.5v3M9 14.5l2 2 4-4',
+};
+
 function Tarjeta({ plan }: { plan: Plan }) {
   const d = plan.destacado;
   const contenido = (
@@ -13,16 +20,19 @@ function Tarjeta({ plan }: { plan: Plan }) {
         d ? 'bg-ink-900 text-white' : 'border border-neutral-200 bg-white text-ink-900 shadow-sm'
       }`}
     >
+      <span className={`mb-6 flex h-12 w-12 items-center justify-center rounded-2xl ${d ? 'bg-beam-500 text-ink-900' : 'bg-ink-900 text-beam-400'}`}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d={ICONOS[plan.icono]} />
+        </svg>
+      </span>
       <h3 className="text-2xl font-bold">{plan.nombre}</h3>
       <p className={`mt-1 text-sm ${d ? 'text-white/65' : 'text-neutral-600'}`}>{plan.bajada}</p>
-      <p className="mt-7">
-        <span className={`text-4xl font-extrabold tracking-tight ${d ? 'text-beam-500' : ''}`}>A medida</span>
-        <br />
-        <span className={`text-sm ${d ? 'text-white/55' : 'text-neutral-500'}`}>
-          Presupuesto según diseño, tecnología y visuales
-        </span>
+      {/* El detalle de qué mueve el presupuesto está debajo de las tarjetas */}
+      <p className={`mt-6 flex items-baseline justify-between gap-3 border-y py-4 ${d ? 'border-white/10' : 'border-neutral-200'}`}>
+        <span className={`text-sm ${d ? 'text-white/55' : 'text-neutral-500'}`}>Presupuesto</span>
+        <span className={`text-2xl font-extrabold tracking-tight ${d ? 'text-beam-500' : ''}`}>A medida</span>
       </p>
-      <ul className="mt-7 flex-1 space-y-2.5 text-sm">
+      <ul className="mt-6 flex-1 space-y-2.5 text-sm">
         {plan.items.map((item, i) => (
           <motion.li
             key={item}
@@ -75,7 +85,7 @@ function Tarjeta({ plan }: { plan: Plan }) {
 
 export default function Planes() {
   return (
-    <section id="planes" className="relative overflow-hidden bg-paper py-28 text-ink-900">
+    <section id="planes" className="relative overflow-hidden bg-paper py-24 text-ink-900 md:py-28">
       <div aria-hidden="true" className="absolute left-1/2 top-40 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-beam-400/20 blur-[140px]" />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">

@@ -47,7 +47,7 @@ export default function Proceso() {
           <div aria-hidden="true" className="scaffold-bg absolute inset-0 opacity-60" />
           <div className="relative mx-auto mb-12 w-full max-w-6xl px-6">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-beam-400">Proceso</p>
-            <h2 className="mt-3 text-6xl font-extrabold tracking-tight">Cómo trabajamos</h2>
+            <h2 className="mt-3 text-6xl font-extrabold tracking-tight">Cómo trabajamos.</h2>
           </div>
           <motion.ol ref={pista} style={{ x }} className="relative flex gap-8 pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] pr-12">
             {PROCESO.map((p, i) => <Paso key={p.titulo} i={i} progreso={progreso} {...p} />)}
@@ -77,7 +77,7 @@ function MovilProceso() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 lg:hidden">
       <p className="text-sm font-semibold uppercase tracking-[0.25em] text-beam-400">Proceso</p>
-      <h2 className="mt-3 text-4xl font-extrabold tracking-tight">Cómo trabajamos</h2>
+      <h2 className="mt-3 text-4xl font-extrabold tracking-tight">Cómo trabajamos.</h2>
       <div className="relative mt-12">
         <div aria-hidden="true" className="absolute bottom-2 left-[15px] top-2 w-0.5 bg-white/10">
           <motion.div style={{ height: alto }} className="w-full bg-beam-500 shadow-[0_0_12px] shadow-beam-500" />
