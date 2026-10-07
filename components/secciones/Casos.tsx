@@ -98,7 +98,7 @@ function Bloque({ caso, invertido }: { caso: Caso; invertido: boolean }) {
         <Reveal>
           <p className="flex flex-wrap items-center gap-2 text-sm">
             <span className="rounded-full bg-ink-900 px-3 py-1 font-semibold text-white">{caso.tipo}</span>
-            <span className="rounded-full border border-neutral-300 px-3 py-1 text-neutral-600">{caso.etiqueta}</span>
+            <span className="rounded-full border border-neutral-300 px-3 py-1 text-neutral-600">{caso.rubro}</span>
           </p>
           <h3 className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl">{caso.nombre}</h3>
           <p className="mt-4 text-lg text-neutral-600">{caso.texto}</p>

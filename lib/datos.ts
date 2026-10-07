@@ -108,7 +108,7 @@ export const AGREGADOS = [
 export type Caso = {
   nombre: string;
   tipo: string;
-  etiqueta: string;
+  rubro: string; // a qué se dedica el negocio; todos los casos se presentan igual
   texto: string;
   puntos: string[];
   enlace?: { href: string; texto: string };
@@ -124,7 +124,7 @@ export const CASOS: Caso[] = [
   {
     nombre: 'Lupa Ecoart',
     tipo: 'Tienda online',
-    etiqueta: 'Cliente',
+    rubro: 'Papelería',
     texto: 'Tienda online de papelería, corte láser y productos reciclables. Construimos el catálogo, el carrito y un panel propio para que la dueña maneje todo desde el celular.',
     puntos: [
       'Catálogo con buscador, categorías y filtro de precio.',
@@ -147,8 +147,8 @@ export const CASOS: Caso[] = [
   {
     nombre: 'Pc Fix',
     tipo: 'Web + sistema a medida',
-    etiqueta: 'Proyecto propio',
-    texto: 'Servicio técnico de PC y notebooks en Montevideo. Además de la web, armamos un sistema para llevar las reparaciones: el taller carga cada orden y el cliente sigue su equipo desde el celular.',
+    rubro: 'Servicio técnico',
+    texto: 'Servicio técnico de PC y notebooks en Montevideo. Construimos la web y un sistema para llevar las reparaciones: el taller carga cada orden y cada cliente sigue su equipo desde el celular.',
     puntos: [
       'Web con servicios, agenda y pedido de cotización.',
       'Panel interno con las órdenes de reparación y su estado.',
