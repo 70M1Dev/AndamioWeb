@@ -102,9 +102,11 @@ export const AGREGADOS = [
 ];
 
 // Trabajos de la sección Casos. Para sacar uno, se borra su bloque entero.
-// Las capturas están en public/casos: las de escritorio de un mismo caso
-// tienen todas la misma proporción (`proporcion`), y `celular` es la que asoma
-// por delante.
+// Las capturas están en public/casos. Cada vista tiene dos: `src` para la
+// ventana de escritorio (todas las de un caso con la misma proporción,
+// `proporcion`) y `movil` para el celular (390x797: lo que queda de una
+// pantalla de 390x844 debajo de la barra de estado). `barraMovil` es el color
+// de arriba de esa captura, que continúa en la barra de estado dibujada.
 export type Caso = {
   nombre: string;
   tipo: string;
@@ -115,8 +117,7 @@ export type Caso = {
   barra: string; // lo que dice la barra del navegador dibujado
   fondo: string;
   proporcion: string;
-  capturas: { src: string; nombre: string; alt: string }[];
-  celular: { src: string; alt: string; ancho: number; alto: number };
+  capturas: { nombre: string; src: string; alt: string; movil: string; barraMovil: string }[];
   nota: string;
 };
 
@@ -137,11 +138,10 @@ export const CASOS: Caso[] = [
     fondo: '#E6EBB1',
     proporcion: '1280 / 672',
     capturas: [
-      { src: '/casos/lupa-tienda.webp', nombre: 'La tienda', alt: 'Portada de la tienda de Lupa Ecoart con sus productos destacados' },
-      { src: '/casos/lupa-producto.webp', nombre: 'Un producto', alt: 'Ficha de un producto en la tienda de Lupa Ecoart, con medidas y botón de compra' },
-      { src: '/casos/lupa-panel.webp', nombre: 'El panel', alt: 'Panel de Lupa Ecoart para manejar productos y stock' },
+      { nombre: 'La tienda', src: '/casos/lupa-tienda.webp', alt: 'Portada de la tienda de Lupa Ecoart con sus productos destacados', movil: '/casos/lupa-tienda-cel.webp', barraMovil: '#FFFFFF' },
+      { nombre: 'Un producto', src: '/casos/lupa-producto.webp', alt: 'Ficha de un producto en la tienda de Lupa Ecoart, con medidas y botón de compra', movil: '/casos/lupa-producto-cel.webp', barraMovil: '#FFFFFF' },
+      { nombre: 'El panel', src: '/casos/lupa-panel.webp', alt: 'Panel de Lupa Ecoart para manejar productos y stock', movil: '/casos/lupa-panel-cel.webp', barraMovil: '#8F9B2F' },
     ],
-    celular: { src: '/casos/lupa-celular.webp', alt: 'La tienda de Lupa Ecoart vista en un celular', ancho: 780, alto: 1560 },
     nota: 'Capturas de la demo, con productos de ejemplo.',
   },
   {
@@ -159,10 +159,10 @@ export const CASOS: Caso[] = [
     fondo: '#DCE7FF',
     proporcion: '1280 / 800',
     capturas: [
-      { src: '/casos/pcfix-inicio.webp', nombre: 'La web', alt: 'Portada del sitio de Pc Fix, servicio técnico de computadoras' },
-      { src: '/casos/pcfix-panel.webp', nombre: 'El panel', alt: 'Panel de Pc Fix con las órdenes de reparación y su estado' },
+      { nombre: 'La web', src: '/casos/pcfix-inicio.webp', alt: 'Portada del sitio de Pc Fix, servicio técnico de computadoras', movil: '/casos/pcfix-web-cel.webp', barraMovil: '#FFFFFF' },
+      { nombre: 'El panel', src: '/casos/pcfix-panel.webp', alt: 'Panel de Pc Fix con las órdenes de reparación y su estado', movil: '/casos/pcfix-panel-cel.webp', barraMovil: '#FFFFFF' },
+      { nombre: 'El seguimiento', src: '/casos/pcfix-seguimiento.webp', alt: 'Seguimiento de una reparación en Pc Fix, con el historial paso a paso', movil: '/casos/pcfix-seguimiento-cel.webp', barraMovil: '#FFFFFF' },
     ],
-    celular: { src: '/casos/pcfix-celular.webp', alt: 'Seguimiento de una reparación de Pc Fix visto en un celular', ancho: 780, alto: 1400 },
     nota: 'Capturas con datos de ejemplo.',
   },
 ];

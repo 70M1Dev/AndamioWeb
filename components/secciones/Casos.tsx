@@ -2,14 +2,15 @@
 
 import { motion, useInView, useScroll, useSpring, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+import Celular from '../Celular';
 import Magnetico from '../efectos/Magnetico';
 import Reveal from '../efectos/Reveal';
 import { CASOS, type Caso } from '@/lib/datos';
 import { reduceMotion } from '@/lib/scroll';
 
-// Las capturas de cada trabajo van en una ventana de navegador, con el celular
-// asomando por delante. Pasan solas mientras están a la vista; cuando la
-// persona elige una, quedan quietas.
+// Las capturas de cada trabajo van en una ventana de navegador, con un celular
+// por delante que muestra la misma vista. Pasan solas mientras están a la
+// vista; cuando la persona elige una, quedan quietas.
 function Vitrina({ caso }: { caso: Caso }) {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useInView(ref, { margin: '-15% 0px' });
@@ -31,7 +32,7 @@ function Vitrina({ caso }: { caso: Caso }) {
       <div className="relative rounded-[1.75rem] p-4 pb-9 sm:p-7 sm:pb-12 md:rounded-[2rem]" style={{ backgroundColor: caso.fondo }}>
         <div aria-hidden="true" className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_30%_15%,#fff9,transparent_60%)]" />
 
-        <div className="relative mr-[10%] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black/25 ring-1 ring-black/10 md:rounded-2xl">
+        <div className="relative mr-[13%] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black/25 ring-1 ring-black/10 md:rounded-2xl">
           <div aria-hidden="true" className="flex h-7 items-center gap-1.5 bg-ink-900 px-3 md:h-9 md:px-3.5">
             {['#F87171', '#F5B400', '#4ADE80'].map(c => (
               <span key={c} className="h-2 w-2 rounded-full md:h-2.5 md:w-2.5" style={{ backgroundColor: c }} />
@@ -53,18 +54,12 @@ function Vitrina({ caso }: { caso: Caso }) {
           </div>
         </div>
 
-        <motion.div
-          style={{ y: yCelular }}
-          className="absolute bottom-[-4%] right-[3.5%] w-[23%] rounded-[1.1rem] bg-ink-900 p-[5px] shadow-2xl shadow-black/40 ring-1 ring-white/10 md:rounded-[1.7rem] md:p-2"
-        >
-          <img
-            src={caso.celular.src}
-            alt={caso.celular.alt}
-            width={caso.celular.ancho}
-            height={caso.celular.alto}
-            loading="lazy"
-            decoding="async"
-            className="block h-auto w-full rounded-[0.8rem] md:rounded-[1.25rem]"
+        {/* El celular muestra la misma vista que la ventana */}
+        <motion.div style={{ y: yCelular }} className="absolute bottom-[-5%] right-[3%] w-[25%]">
+          <Celular
+            pantallas={caso.capturas.map(c => ({ src: c.movil, barra: c.barraMovil }))}
+            activa={activa}
+            etiqueta={`${caso.capturas[activa].nombre} de ${caso.nombre}, en un celular`}
           />
         </motion.div>
       </div>
